@@ -1,8 +1,6 @@
 # Travel-map-client
 # Initialize
-```
-npm install
-```
+### `npm install`
 
 # Usage
 ### `npm start`
