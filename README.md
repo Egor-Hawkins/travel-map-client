@@ -1,10 +1,10 @@
 # Travel-map-client
-# Initialize
+## Initialize
 ```
 npm install
 ```
 
-# Usage
+## Usage
 ```
 npm start
 ```
