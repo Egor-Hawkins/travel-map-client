@@ -2,13 +2,14 @@ export const mapState = {
     center: [0, 0],
     zoom: 3,
     controls: ['zoomControl'],
-    type: 'yandex#hybrid',
+    type: 'yandex#hybrid'
 };
 
 export const mapStyle = {
     position: 'absolute',
+    top: '40px',
     width: '100%',
-    height: '100%',
+    height: '90%'
 };
 
 export const DEFAULT_OPTIONS = {
