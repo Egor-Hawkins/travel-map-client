@@ -3,31 +3,31 @@ export const mapState = {
     zoom: 3,
     controls: ['zoomControl'],
     type: 'yandex#hybrid',
-}
+};
 
 export const mapStyle = {
     position: 'absolute',
     width: '100%',
     height: '100%',
-}
+};
 
 export const DEFAULT_OPTIONS = {
     type: 'DEFAULT',
     fillColor: '#ffffff',
     fillOpacity: 0.0
-}
+};
 
 const SELECT_OPTIONS = {
     type: 'SELECT',
     fillColor: '#fb6c3f',
     fillOpacity: 0.8
-}
+};
 
 const HIGHLIGHT_OPTIONS = {
     type: 'HIGHLIGHT',
     fillColor: '#f5ab94',
     fillOpacity: 0.6
-}
+};
 
 export function enterCountry(event) {
     const target = event.get('target');
