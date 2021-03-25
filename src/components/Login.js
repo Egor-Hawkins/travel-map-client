@@ -32,7 +32,8 @@ export default class Login extends React.Component {
             }
         }
 
-        axios.post("http://localhost:8080/login", querystring.stringify({
+        const SERVER_LOGIN_URL = process.env.REACT_APP_SERVER_LOGIN_URL;
+        axios.post(SERVER_LOGIN_URL, querystring.stringify({
             username: this.state.username,
             password: this.state.password
         }), {

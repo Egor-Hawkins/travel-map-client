@@ -5,7 +5,8 @@ const axios = require("axios").default;
 
 export default class Ping extends React.Component {
     ping = () => {
-        axios.get("http://localhost:8080/api/ping", {
+        const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
+        axios.get(SERVER_PING_URL, {
             withCredentials: true
         }).then(result => {
             console.log("Ok!");
