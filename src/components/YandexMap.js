@@ -1,6 +1,6 @@
-//import styles from './App.css';
-import React from 'react';
-import {YMaps, Map} from 'react-yandex-maps';
+//import styles from "./App.css";
+import React from "react";
+import {YMaps, Map} from "react-yandex-maps";
 
 export default class YandexMap extends React.Component {
     constructor(props) {
@@ -19,9 +19,9 @@ export default class YandexMap extends React.Component {
                 let geoObject = new this.ymaps.GeoObject(feature);
                 geoObject.options.set(this.props.defaultOptions);
 
-                geoObject.events.add('mouseenter', this.props.enterCountry);
-                geoObject.events.add('mouseleave', this.props.leaveCountry);
-                geoObject.events.add('click', this.props.clickOnCountry);
+                geoObject.events.add("mouseenter", this.props.enterCountry);
+                geoObject.events.add("mouseleave", this.props.leaveCountry);
+                geoObject.events.add("click", this.props.clickOnCountry);
 
                 this.map.current.geoObjects.add(geoObject);
             });
@@ -40,8 +40,8 @@ export default class YandexMap extends React.Component {
             <div className="YandexMap">
                 <YMaps
                     query={{
-                        ns: 'use-load-option',
-                        load: 'Map,control.ZoomControl,borders,GeoObject',
+                        ns: "use-load-option",
+                        load: "Map,control.ZoomControl,borders,GeoObject",
                     }}
                 >
                     <Map
