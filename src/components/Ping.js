@@ -2,10 +2,10 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
+const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
 
 export default class Ping extends React.Component {
     ping = () => {
-        const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
         axios.get(SERVER_PING_URL, {
             withCredentials: true
         }).then(result => {

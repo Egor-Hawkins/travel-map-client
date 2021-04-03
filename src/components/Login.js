@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
+const SERVER_LOGIN_URL = process.env.REACT_APP_SERVER_LOGIN_URL;
 
 export default class Login extends React.Component {
     defaultFormState = {
@@ -32,7 +33,6 @@ export default class Login extends React.Component {
             }
         }
 
-        const SERVER_LOGIN_URL = process.env.REACT_APP_SERVER_LOGIN_URL;
         axios.post(SERVER_LOGIN_URL, querystring.stringify({
             username: this.state.username,
             password: this.state.password
