@@ -5,7 +5,7 @@ export const mapState = {
     center: [0, 0],
     zoom: 3,
     controls: ["zoomControl"],
-    type: "yandex#hybrid"
+    type: "yandex#map"
 };
 
 export const mapStyle = {

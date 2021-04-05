@@ -2,6 +2,7 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
+const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_REGISTRATION_URL;
 
 export default class Register extends React.Component {
     defaultFormState = {
@@ -32,7 +33,7 @@ export default class Register extends React.Component {
             }
         }
 
-        axios.post("http://localhost:8080/registration", {
+        axios.post(SERVER_REGISTRATION_URL, {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password

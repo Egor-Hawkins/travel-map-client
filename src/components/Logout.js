@@ -2,10 +2,11 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
+const SERVER_LOGOUT_URL = process.env.REACT_APP_SERVER_LOGOUT_URL;
 
 export default class Logout extends React.Component {
     logout = () => {
-        axios.get("http://localhost:8080/logout", {
+        axios.put(SERVER_LOGOUT_URL, {
             withCredentials: true
         }).then(result => {
             console.log("Ok!");
