@@ -10,7 +10,6 @@ export default class Home extends React.Component {
                 <NavLink to="/registration">Register</NavLink><br/>
                 <NavLink to="/login">Login</NavLink><br/>
                 <NavLink to="/ping">Ping</NavLink><br/>
-                <NavLink to="/visited_countries">Visited Countries</NavLink><br/>
                 <NavLink to="/logout">Logout</NavLink><br/>
             </div>
         );

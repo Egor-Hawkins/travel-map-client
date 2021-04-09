@@ -8,7 +8,6 @@ import Register from "./components/Register.js";
 import Login from "./components/Login.js";
 import Ping from "./components/Ping.js";
 import Logout from "./components/Logout.js";
-import VisitedCountries from "./components/VisitedCountries.js";
 
 export default class App extends React.Component {
     render() {
@@ -21,7 +20,6 @@ export default class App extends React.Component {
                         <Route path="/registration" component={Register}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/ping" component={Ping}/>
-                        <Route path="/visited_countries" component={VisitedCountries}/>
                         <Route path="/logout" component={Logout}/>
                         <Route component={Error}/>
                     </Switch>
