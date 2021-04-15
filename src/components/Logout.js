@@ -6,7 +6,7 @@ const SERVER_LOGOUT_URL = process.env.REACT_APP_SERVER_LOGOUT_URL;
 
 export default class Logout extends React.Component {
     logout = () => {
-        axios.put(SERVER_LOGOUT_URL, {
+        axios.get(SERVER_LOGOUT_URL, {
             withCredentials: true
         }).then(result => {
             console.log("Ok!");

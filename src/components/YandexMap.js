@@ -10,14 +10,18 @@ export default class YandexMap extends React.Component {
         this.ymaps = React.createRef();
     }
 
-    addGeoObjectEvents() {
+    addGeoObjects() {
         this.ymaps.borders.load("001", {
             lang: "ru",
             quality: 1
         }).then(result => {
             result.features.forEach(feature => {
                 let geoObject = new this.ymaps.GeoObject(feature);
-                geoObject.options.set(this.props.defaultOptions);
+                if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
+                    geoObject.options.set(this.props.selectOptions);
+                } else {
+                    geoObject.options.set(this.props.defaultOptions);
+                }
 
                 geoObject.events.add("mouseenter", this.props.enterCountry);
                 geoObject.events.add("mouseleave", this.props.leaveCountry);
@@ -32,7 +36,7 @@ export default class YandexMap extends React.Component {
         if (!ymaps || !this.map || !this.map.current) return;
         this.ymaps = ymaps;
 
-        this.addGeoObjectEvents();
+        this.addGeoObjects();
     };
 
     render() {
