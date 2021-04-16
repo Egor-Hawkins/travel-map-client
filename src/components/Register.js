@@ -1,5 +1,8 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import "../css/Background.css";
+import styles from "../css/Register.module.css";
+import "../css/Form.css";
 
 const axios = require("axios").default;
 const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_REGISTRATION_URL;
@@ -61,30 +64,37 @@ export default class Register extends React.Component {
     render() {
         return (
             <div className="Register">
-                <input
-                    type="text"
-                    placeholder="Insert your email"
-                    value={this.state.email}
-                    onChange={this.handleChange("email")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <input
-                    type="text"
-                    placeholder="Insert your username"
-                    value={this.state.username}
-                    onChange={this.handleChange("username")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <input
-                    type="password"
-                    placeholder="Insert your password"
-                    value={this.state.password}
-                    onChange={this.handleChange("password")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <button type="submit" id="submit" onClick={this.register}>Register</button>
-                <br/><br/>
-                <NavLink to="/">Home</NavLink><br/>
+                <div id="bg"/>
+                <NavLink to="/">Logo?</NavLink><br/>
+                <div className={styles.form}>
+                    <input
+                        type="text"
+                        placeholder="Insert your email"
+                        value={this.state.email}
+                        onChange={this.handleChange("email")}
+                        onKeyDown={this.handleKeyDown}
+                    /><br/>
+                    <input
+                        type="text"
+                        placeholder="Insert your username"
+                        value={this.state.username}
+                        onChange={this.handleChange("username")}
+                        onKeyDown={this.handleKeyDown}
+                    /><br/>
+                    <input
+                        type="password"
+                        placeholder="Insert your password"
+                        value={this.state.password}
+                        onChange={this.handleChange("password")}
+                        onKeyDown={this.handleKeyDown}
+                    /><br/><br/>
+                    <input
+                        className="btn"
+                        type="submit"
+                        value="Register"
+                        onClick={this.register}
+                    />
+                </div>
             </div>
         );
     }

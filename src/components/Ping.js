@@ -1,5 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import "../css/Background.css";
 
 const axios = require("axios").default;
 const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
@@ -21,6 +22,7 @@ export default class Ping extends React.Component {
     render() {
         return (
             <div className="Ping">
+                <div id="bg"/>
                 <button onClick={this.ping}>ping</button>
                 <br/><br/>
                 <NavLink to="/">Home</NavLink><br/>

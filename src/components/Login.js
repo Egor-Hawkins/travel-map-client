@@ -1,5 +1,8 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import "../css/Background.css";
+import "../css/Form.css";
+import styles from "../css/Login.module.css";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
@@ -64,23 +67,30 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="Login">
-                <input
-                    type="text"
-                    placeholder="Insert your username"
-                    value={this.state.username}
-                    onChange={this.handleChange("username")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <input
-                    type="password"
-                    placeholder="Insert your password"
-                    value={this.state.password}
-                    onChange={this.handleChange("password")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <button type="submit" id="submit" onClick={this.login}>Login</button>
-                <br/><br/>
-                <NavLink to="/">Home</NavLink><br/>
+                <div id="bg"/>
+                <NavLink to="/">Logo?</NavLink><br/>
+                <div className={styles.form}>
+                    <input
+                        type="text"
+                        placeholder="Insert your username"
+                        value={this.state.username}
+                        onChange={this.handleChange("username")}
+                        onKeyDown={this.handleKeyDown}
+                    /><br/>
+                    <input
+                        type="password"
+                        placeholder="Insert your password"
+                        value={this.state.password}
+                        onChange={this.handleChange("password")}
+                        onKeyDown={this.handleKeyDown}
+                    /><br/><br/>
+                    <input
+                        className="btn"
+                        type="submit"
+                        value="Login"
+                        onClick={this.login}
+                    /><br/><br/>
+                </div>
             </div>
         );
     }
