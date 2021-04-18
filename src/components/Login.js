@@ -1,8 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import "../css/Background.css";
-import "../css/Form.css";
-import styles from "../css/Login.module.css";
+import formStyle from "../css/Form.module.css";
 import 'font-awesome/css/font-awesome.min.css';
 
 const axios = require("axios").default;
@@ -49,6 +48,7 @@ export default class Login extends React.Component {
             console.log("Ok!");
             console.log(result);
             alert(result.data);
+            window.open("/map", "_self");
             this.setState(this.defaultFormState);
         }).catch((error) => {
             console.log("Error occurred!");
@@ -69,12 +69,12 @@ export default class Login extends React.Component {
         return (
             <div className="Login">
                 <div id="bg"/>
-                <div className="homeIcon">
-                    <NavLink className="link" to="/">
+                <div className={formStyle.homeIcon}>
+                    <NavLink className={formStyle.link} to="/">
                         <i className="fa fa-home" aria-hidden="true"/>
                     </NavLink>
                 </div>
-                <div className={styles.form}>
+                <div className={formStyle.form}>
                     <input
                         type="text"
                         placeholder="Enter your username"
@@ -90,7 +90,7 @@ export default class Login extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
-                        className="btn"
+                        className={formStyle.btn}
                         type="submit"
                         value="Login"
                         onClick={this.login}

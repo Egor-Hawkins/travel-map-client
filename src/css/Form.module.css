@@ -1,3 +1,13 @@
+.form {
+  top: 75px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+  display: block;
+}
+
 input:not([type=submit]) {
   width: 500px;
   padding: 12px 20px;
@@ -39,3 +49,4 @@ input:not([type=submit]) {
   width: 171px;
   font-size: 60px;
 }
+

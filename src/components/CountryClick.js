@@ -1,5 +1,6 @@
 import React from "react";
 import YandexMap from "./YandexMap";
+import {Redirect} from "react-router";
 
 const axios = require("axios").default;
 const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_VISITED_COUNTRIES_URL;
@@ -40,6 +41,10 @@ export default class CountryClick extends React.Component {
         super(props);
 
         this.visitedISO = [];
+        this.state = {
+            waitForServer: true,
+            loggedIn: false
+        };
     }
 
     enterCountry = event => {
@@ -121,15 +126,27 @@ export default class CountryClick extends React.Component {
         }
     };
 
-    async componentWillMount() {
+    componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
-            for (const country of visitedCountries) {
-                this.visitedISO.push(country.iso);
+            // TODO https://github.com/Egor-Hawkins/travel-map-server/issues/22
+            if (visitedCountries[0] !== '<') {
+                for (const country of visitedCountries) {
+                    this.visitedISO.push(country.iso);
+                }
+                this.setState({
+                    loggedIn: true
+                });
             }
+            this.setState({
+                waitForServer: false
+            });
         });
     }
 
     render() {
+        if (this.state.waitForServer) return <span>Loading map...</span>;
+        if (!this.state.loggedIn) return <Redirect to="/"/>;
+
         return (
             <div className="Map">
                 <YandexMap

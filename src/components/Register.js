@@ -1,8 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import "../css/Background.css";
-import styles from "../css/Register.module.css";
-import "../css/Form.css";
+import formStyle from "../css/Form.module.css";
 
 const axios = require("axios").default;
 const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_REGISTRATION_URL;
@@ -65,12 +64,12 @@ export default class Register extends React.Component {
         return (
             <div className="Register">
                 <div id="bg"/>
-                <div className="homeIcon">
-                    <NavLink className="link" to="/">
+                <div className={formStyle.homeIcon}>
+                    <NavLink className={formStyle.link} to="/">
                         <i className="fa fa-home" aria-hidden="true"/>
                     </NavLink>
                 </div>
-                <div className={styles.form}>
+                <div className={formStyle.form}>
                     <input
                         type="text"
                         placeholder="Enter your email"
@@ -93,7 +92,7 @@ export default class Register extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
-                        className="btn"
+                        className={formStyle.btn}
                         type="submit"
                         value="Register"
                         onClick={this.register}
