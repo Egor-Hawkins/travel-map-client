@@ -65,7 +65,11 @@ export default class Register extends React.Component {
         return (
             <div className="Register">
                 <div id="bg"/>
-                <NavLink to="/">Logo?</NavLink><br/>
+                <NavLink className="link" to="/">
+                    <div className="homeIcon">
+                        <i className="fa fa-home" aria-hidden="true"/>
+                    </div>
+                </NavLink>
                 <div className={styles.form}>
                     <input
                         type="text"
@@ -73,21 +77,21 @@ export default class Register extends React.Component {
                         value={this.state.email}
                         onChange={this.handleChange("email")}
                         onKeyDown={this.handleKeyDown}
-                    /><br/>
+                    />
                     <input
                         type="text"
                         placeholder="Insert your username"
                         value={this.state.username}
                         onChange={this.handleChange("username")}
                         onKeyDown={this.handleKeyDown}
-                    /><br/>
+                    />
                     <input
                         type="password"
                         placeholder="Insert your password"
                         value={this.state.password}
                         onChange={this.handleChange("password")}
                         onKeyDown={this.handleKeyDown}
-                    /><br/><br/>
+                    />
                     <input
                         className="btn"
                         type="submit"

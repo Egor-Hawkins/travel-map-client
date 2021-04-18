@@ -8,7 +8,7 @@ export default class Home extends React.Component {
         return (
             <div className="Home">
                 <div id="bg"/>
-                <div className={styles.menu}>
+                <div className={styles.centered}>
                     <h1>Travel map</h1>
                     <div className={styles.loginLinkContainer}>
                         <NavLink className={styles.link} to="/login">

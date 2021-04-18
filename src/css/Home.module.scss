@@ -28,10 +28,6 @@ h1 {
   transform: translate(-50%);
 }
 
-.menu {
-  @extend .centered;
-}
-
 $button-text-color: #000000;
 $button-active-text-color: #ffffff;
 $button-background-color: #ff493a;
