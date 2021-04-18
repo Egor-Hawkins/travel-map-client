@@ -1,25 +1,25 @@
 input:not([type=submit]) {
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    box-shadow: 0 0 15px 4px #000000;
-    border-radius: 20px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 4px #000000;
+  border-radius: 20px;
 }
 
 .btn {
-    font-size: 15px;
-    width: 100px;
-    height: 30px;
-    color: #000000;
-    background-color: #ffffff;
-    border-color: #325bbf;
-    outline: none;
-    box-shadow: none;
-    border-radius: 20px;
+  font-size: 15px;
+  width: 100px;
+  height: 30px;
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #325bbf;
+  outline: none;
+  box-shadow: none;
+  border-radius: 20px;
 }
 
 .btn:hover {
-    color: #000000;
-    background-color: #d6d4d9;
-    border-color: #0371ea;
+  color: #000000;
+  background-color: #d6d4d9;
+  border-color: #0371ea;
 }
