@@ -7,36 +7,57 @@ $title-shadow-color: #082b34;
 h1 {
   color: $title-color;
   font-family: 'Rouge Script', cursive;
-  font-size: 130px;
+  font-size: calc(2em + 7vw);
   font-weight: normal;
   line-height: 48px;
-  text-align: center;
+  white-space: nowrap;
   text-shadow: 1px 1px 2px $title-shadow-color;
 }
 
-.menu {
-  text-align: center;
+.loginLinkContainer {
+  height: 20vh;
 }
 
-$button-background-color: #ff493a;
+.link {
+  text-decoration: none;
+}
+
+.centered {
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+}
+
+.menu {
+  @extend .centered;
+}
+
 $button-text-color: #000000;
 $button-active-text-color: #ffffff;
+$button-background-color: #ff493a;
 $button-active-background-color: #66c161;
 $button-active-box-shadow-color: #0c280a;
 
 .basicBtn {
+  @extend .centered;
+
   font-family: Hack, monospace;
   background: $button-background-color;
   color: $button-text-color;
   cursor: pointer;
   padding: 2rem;
-  font-size: 2.5em;
+  font-size: calc(1em + 2vw);
   border: 0;
   transition: all 0.5s;
   border-radius: 10px;
   width: auto;
-  position: relative;
-  min-width: 300px;
+  outline: none;
+  display: block;
+
+  &:hover {
+    color: $button-active-text-color;
+  }
 }
 
 .loginBtn {
@@ -59,13 +80,13 @@ $button-active-box-shadow-color: #0c280a;
     transition: all 0.5s;
     border-radius: 10px;
     box-shadow: 0 6px 15px $button-active-box-shadow-color;
-    padding: 2rem 3.5rem 2rem 2rem;
+    padding: 2rem 6rem 2rem 2rem;
     color: $button-active-text-color;
 
     &::after {
       opacity: 1;
       transition: all 0.5s;
-      color: $button-active-text-color;
+      color: $button-active-text-color
     }
   }
 }
@@ -90,7 +111,7 @@ $button-active-box-shadow-color: #0c280a;
     transition: all 0.5s;
     border-radius: 10px;
     box-shadow: 0 6px 15px $button-active-box-shadow-color;
-    padding: 2rem 4.7rem 2rem 2rem;
+    padding: 2rem 5rem 2rem 2rem;
     color: $button-active-text-color;
 
     &::after {
