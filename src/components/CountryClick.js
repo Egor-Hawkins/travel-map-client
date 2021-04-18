@@ -129,7 +129,7 @@ export default class CountryClick extends React.Component {
     componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
             // TODO https://github.com/Egor-Hawkins/travel-map-server/issues/22
-            if (visitedCountries[0] !== '<') {
+            if (visitedCountries[0] !== "<") {
                 for (const country of visitedCountries) {
                     this.visitedISO.push(country.iso);
                 }

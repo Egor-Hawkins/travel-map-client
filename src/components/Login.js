@@ -2,7 +2,7 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import "../css/Background.css";
 import formStyle from "../css/Form.module.css";
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
