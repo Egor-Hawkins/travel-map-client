@@ -69,22 +69,22 @@ export default class Login extends React.Component {
         return (
             <div className="Login">
                 <div id="bg"/>
-                <NavLink className="link" to="/">
-                    <div className="homeIcon">
+                <div className="homeIcon">
+                    <NavLink className="link" to="/">
                         <i className="fa fa-home" aria-hidden="true"/>
-                    </div>
-                </NavLink>
+                    </NavLink>
+                </div>
                 <div className={styles.form}>
                     <input
                         type="text"
-                        placeholder="Insert your username"
+                        placeholder="Enter your username"
                         value={this.state.username}
                         onChange={this.handleChange("username")}
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
                         type="password"
-                        placeholder="Insert your password"
+                        placeholder="Enter your password"
                         value={this.state.password}
                         onChange={this.handleChange("password")}
                         onKeyDown={this.handleKeyDown}

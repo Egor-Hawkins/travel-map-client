@@ -131,7 +131,7 @@ export default class CountryClick extends React.Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="Map">
                 <YandexMap
                     enterCountry={this.enterCountry}
                     leaveCountry={this.leaveCountry}
