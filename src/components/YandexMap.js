@@ -1,4 +1,3 @@
-//import styles from "./App.css";
 import React from "react";
 import {YMaps, Map} from "react-yandex-maps";
 

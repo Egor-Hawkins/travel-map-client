@@ -1,5 +1,8 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import "../css/Background.css";
+import formStyle from "../css/Form.module.css";
+import "font-awesome/css/font-awesome.min.css";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
@@ -45,6 +48,7 @@ export default class Login extends React.Component {
             console.log("Ok!");
             console.log(result);
             alert(result.data);
+            window.open("/map", "_self");
             this.setState(this.defaultFormState);
         }).catch((error) => {
             console.log("Error occurred!");
@@ -64,23 +68,34 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="Login">
-                <input
-                    type="text"
-                    placeholder="Insert your username"
-                    value={this.state.username}
-                    onChange={this.handleChange("username")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <input
-                    type="password"
-                    placeholder="Insert your password"
-                    value={this.state.password}
-                    onChange={this.handleChange("password")}
-                    onKeyDown={this.handleKeyDown}
-                /><br/>
-                <button type="submit" id="submit" onClick={this.login}>Login</button>
-                <br/><br/>
-                <NavLink to="/">Home</NavLink><br/>
+                <div id="bg"/>
+                <div className={formStyle.homeIcon}>
+                    <NavLink className={formStyle.link} to="/">
+                        <i className="fa fa-home" aria-hidden="true"/>
+                    </NavLink>
+                </div>
+                <div className={formStyle.form}>
+                    <input
+                        type="text"
+                        placeholder="Enter your username"
+                        value={this.state.username}
+                        onChange={this.handleChange("username")}
+                        onKeyDown={this.handleKeyDown}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Enter your password"
+                        value={this.state.password}
+                        onChange={this.handleChange("password")}
+                        onKeyDown={this.handleKeyDown}
+                    />
+                    <input
+                        className={formStyle.btn}
+                        type="submit"
+                        value="Login"
+                        onClick={this.login}
+                    />
+                </div>
             </div>
         );
     }

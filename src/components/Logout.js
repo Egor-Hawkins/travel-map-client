@@ -1,5 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import "../css/Background.css";
+import formStyle from "../css/Form.module.css";
 
 const axios = require("axios").default;
 const SERVER_LOGOUT_URL = process.env.REACT_APP_SERVER_LOGOUT_URL;
@@ -21,9 +23,20 @@ export default class Logout extends React.Component {
     render() {
         return (
             <div className="Logout">
-                <button onClick={this.logout}>logout</button>
-                <br/><br/>
-                <NavLink to="/">Home</NavLink><br/>
+                <div id="bg"/>
+                <div className={formStyle.homeIcon}>
+                    <NavLink className={formStyle.link} to="/">
+                        <i className="fa fa-home" aria-hidden="true"/>
+                    </NavLink>
+                </div>
+                <div className={formStyle.form}>
+                    <button
+                        className={formStyle.btn}
+                        onClick={this.logout}
+                    >logout
+                    </button>
+                    <br/><br/>
+                </div>
             </div>
         );
     }
