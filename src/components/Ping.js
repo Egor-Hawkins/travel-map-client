@@ -15,8 +15,12 @@ export default class Ping extends React.Component {
             console.log(result);
             alert(result.data);
         }).catch((error) => {
-            console.log("Error occurred!");
-            console.log(error);
+            if (error.response.status === 401) {
+                alert("Not logged in");
+            } else {
+                console.log("Error occurred!");
+                console.log(error);
+            }
         });
     };
 
