@@ -129,7 +129,7 @@ export default class CountryClick extends React.Component {
 
     render() {
         if (this.state.waitForServer) return <span>Loading map...</span>;
-        if (!this.state.loggedIn) return <Redirect to="/"/>;
+        if (!this.state.loggedIn) return <Redirect to="/login"/>;
 
         return (
             <div className="Map">
