@@ -1,8 +1,8 @@
 $menu-button-color: #9fa8d0;
-$menu-button-hover-color: #a90000;
+$menu-button-hover-color: #a92f2f;
 $menu-cross-button-color: #bdc3c7;
-$menu-bg-color: #373a47;
-$menu-item-color: #d1d1d1;
+$menu-bg-color: #3c3f4e;
+$menu-item-color: #dedede;
 $menu-item-hover-color: #ffffff;
 
 .bm-burger-button {
@@ -42,8 +42,8 @@ $menu-item-hover-color: #ffffff;
 
 .bm-menu {
   background: $menu-bg-color;
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
+  padding: 2em 1em 0;
+  font-size: 1.6em;
 }
 
 .bm-item-list {
@@ -64,7 +64,6 @@ $menu-item-hover-color: #ffffff;
   color: $menu-item-hover-color;
 }
 
-/* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
