@@ -61,23 +61,14 @@ export default class CountryClick extends React.Component {
         }
     };
 
-    askToLogin = () => {
-        alert("Login blin!");
-    };
-
     visit = iso => {
         axios.put(SERVER_VISITED_COUNTRIES_URL, {
             iso: iso
         }, {
             withCredentials: true
-        }).then(() => {
-            alert(iso + " visited!");
-        }).catch((error) => {
+        }).catch(error => {
             console.log("Error occurred!");
             console.log(error);
-            if (error.response.status === 404) {
-                this.askToLogin();
-            }
         });
     };
 
@@ -87,28 +78,22 @@ export default class CountryClick extends React.Component {
                 iso: iso
             },
             withCredentials: true
-        }).then(() => {
-            alert(iso + " unvisited!");
         }).catch((error) => {
             console.log("Error occurred!");
             console.log(error);
-            if (error.response.status === 404) {
-                this.askToLogin();
-            }
         });
     };
 
     async getVisitedCountries() {
-        let visitedCountries = [];
+        let visitedCountries = null;
         await axios.get(SERVER_VISITED_COUNTRIES_URL, {
             withCredentials: true
         }).then(result => {
             visitedCountries = result.data;
-        }).catch((error) => {
-            console.log("Error occurred!");
-            console.log(error);
-            if (error.response.status === 404) {
-                this.askToLogin();
+        }).catch(error => {
+            if (error.response.status !== 401) {
+                console.log("Error occurred!");
+                console.log(error);
             }
         });
         return visitedCountries;
@@ -128,8 +113,7 @@ export default class CountryClick extends React.Component {
 
     componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
-            // TODO https://github.com/Egor-Hawkins/travel-map-server/issues/22
-            if (visitedCountries[0] !== "<") {
+            if (visitedCountries) {
                 for (const country of visitedCountries) {
                     this.visitedISO.push(country.iso);
                 }
@@ -145,7 +129,7 @@ export default class CountryClick extends React.Component {
 
     render() {
         if (this.state.waitForServer) return <span>Loading map...</span>;
-        if (!this.state.loggedIn) return <Redirect to="/"/>;
+        if (!this.state.loggedIn) return <Redirect to="/login"/>;
 
         return (
             <div className="Map">
