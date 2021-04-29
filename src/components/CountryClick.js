@@ -92,9 +92,14 @@ export default class CountryClick extends React.Component {
         }).then(result => {
             visitedCountries = result.data;
         }).catch(error => {
-            if (error.response.status !== 401) {
-                console.log("Error occurred!");
-                console.log(error);
+            if (error.response) {
+                if (error.response.status !== 401) {
+                    console.log("Error occurred!");
+                    console.log(error);
+                }
+                this.setState({
+                    waitForServer: false
+                });
             }
         });
         return visitedCountries;
@@ -122,9 +127,6 @@ export default class CountryClick extends React.Component {
                     loggedIn: true
                 });
             }
-            this.setState({
-                waitForServer: false
-            });
         });
     }
 
