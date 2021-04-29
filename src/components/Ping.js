@@ -1,7 +1,7 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
 import "../css/Background.css";
 import formStyle from "../css/Form.module.css";
+import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
 const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
@@ -27,12 +27,8 @@ export default class Ping extends React.Component {
     render() {
         return (
             <div className="Ping">
+                <Sidebar/>
                 <div id="bg"/>
-                <div className={formStyle.homeIcon}>
-                    <NavLink className={formStyle.link} to="/">
-                        <i className="fa fa-home" aria-hidden="true"/>
-                    </NavLink>
-                </div>
                 <div className={formStyle.form}>
                     <button className={formStyle.btn} onClick={this.ping}>
                         ping
