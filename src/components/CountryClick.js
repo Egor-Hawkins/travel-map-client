@@ -1,6 +1,7 @@
 import React from "react";
 import YandexMap from "./YandexMap";
 import {Redirect} from "react-router";
+import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
 const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_VISITED_COUNTRIES_URL;
@@ -133,6 +134,7 @@ export default class CountryClick extends React.Component {
 
         return (
             <div className="Map">
+                <Sidebar/>
                 <YandexMap
                     enterCountry={this.enterCountry}
                     leaveCountry={this.leaveCountry}

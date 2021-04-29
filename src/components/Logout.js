@@ -14,6 +14,7 @@ export default class Logout extends React.Component {
             console.log("Ok!");
             console.log(result);
             alert(result.data);
+            window.open("/", "_self");
         }).catch((error) => {
             console.log("Error occurred!");
             console.log(error);

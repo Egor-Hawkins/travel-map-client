@@ -1,6 +1,5 @@
 import React from "react";
 import {YMaps, Map} from "react-yandex-maps";
-import Sidebar from "./Sidebar.js";
 
 export default class YandexMap extends React.Component {
     constructor(props) {
@@ -42,7 +41,6 @@ export default class YandexMap extends React.Component {
     render() {
         return (
             <div className="YandexMap">
-                <Sidebar/>
                 <YMaps
                     query={{
                         ns: "use-load-option",

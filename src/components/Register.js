@@ -1,7 +1,9 @@
 import React from "react";
 import "../css/Background.css";
 import formStyle from "../css/Form.module.css";
+import style from "../css/Register.module.css";
 import Sidebar from "./Sidebar.js";
+import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
 const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_REGISTRATION_URL;
@@ -42,15 +44,16 @@ export default class Register extends React.Component {
         }).then(result => {
             console.log("Ok!");
             console.log(result);
-            if (result.data.indexOf("Email not valid") >= 0) {
+            alert(result.data);
+            this.setState(this.defaultFormState);
+            window.open("/login", "_self");
+        }).catch((error) => {
+            if (error.response.status === 409) {
                 alert("Email not valid");
             } else {
-                alert(result.data);
-                this.setState(this.defaultFormState);
+                console.log("Error occurred!");
+                console.log(error);
             }
-        }).catch((error) => {
-            console.log("Error occurred!");
-            console.log(error);
         });
     };
 
@@ -93,6 +96,12 @@ export default class Register extends React.Component {
                         value="Register"
                         onClick={this.register}
                     />
+                    <p className={style.txt}>
+                        Already registered?
+                    </p>
+                    <NavLink className={style.toLogin} to="/login">
+                        Login
+                    </NavLink>
                 </div>
             </div>
         );
