@@ -91,16 +91,6 @@ export default class CountryClick extends React.Component {
             withCredentials: true
         }).then(result => {
             visitedCountries = result.data;
-        }).catch(error => {
-            if (error.response) {
-                if (error.response.status !== 401) {
-                    console.log("Error occurred!");
-                    console.log(error);
-                }
-                this.setState({
-                    waitForServer: false
-                });
-            }
         });
         return visitedCountries;
     };
@@ -119,13 +109,22 @@ export default class CountryClick extends React.Component {
 
     componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
-            if (visitedCountries) {
-                for (const country of visitedCountries) {
-                    this.visitedISO.push(country.iso);
-                }
+            for (const country of visitedCountries) {
+                this.visitedISO.push(country.iso);
+            }
+            this.setState({
+                waitForServer: false,
+                loggedIn: true
+            });
+        }).catch(error => {
+            if (error.response && error.response.status === 401) {
                 this.setState({
-                    loggedIn: true
+                    waitForServer: false,
+                    loggedIn: false
                 });
+            } else {
+                console.log("Error occurred!");
+                console.log(error);
             }
         });
     }
