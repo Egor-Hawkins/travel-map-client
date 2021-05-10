@@ -3,7 +3,8 @@ import YandexMap from "./YandexMap";
 import {Redirect} from "react-router";
 
 const axios = require("axios").default;
-const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_VISITED_COUNTRIES_URL;
+const VISITED_COUNTRIES_PATH = "api/user/visited_countries";
+const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + VISITED_COUNTRIES_PATH;
 
 const mapState = {
     center: [0, 0],

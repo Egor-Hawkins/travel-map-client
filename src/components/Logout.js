@@ -4,7 +4,8 @@ import "../css/Background.css";
 import formStyle from "../css/Form.module.css";
 
 const axios = require("axios").default;
-const SERVER_LOGOUT_URL = process.env.REACT_APP_SERVER_LOGOUT_URL;
+const LOGOUT_PATH = "logout";
+const SERVER_LOGOUT_URL = process.env.REACT_APP_SERVER_URL + LOGOUT_PATH;
 
 export default class Logout extends React.Component {
     logout = () => {
