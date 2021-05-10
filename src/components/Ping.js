@@ -4,7 +4,8 @@ import formStyle from "../css/Form.module.css";
 import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
-const SERVER_PING_URL = process.env.REACT_APP_SERVER_PING_URL;
+const PING_PATH = "api/ping";
+const SERVER_PING_URL = process.env.REACT_APP_SERVER_URL + PING_PATH;
 
 export default class Ping extends React.Component {
     ping = () => {

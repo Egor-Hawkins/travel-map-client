@@ -6,7 +6,8 @@ import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
-const SERVER_LOGIN_URL = process.env.REACT_APP_SERVER_LOGIN_URL;
+const LOGIN_PATH = "login";
+const SERVER_LOGIN_URL = process.env.REACT_APP_SERVER_URL + LOGIN_PATH;
 
 export default class Login extends React.Component {
     defaultFormState = {

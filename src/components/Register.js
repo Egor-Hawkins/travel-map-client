@@ -6,7 +6,8 @@ import Sidebar from "./Sidebar.js";
 import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
-const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_REGISTRATION_URL;
+const REGISTRATION_PATH = "registration";
+const SERVER_REGISTRATION_URL = process.env.REACT_APP_SERVER_URL + REGISTRATION_PATH;
 
 export default class Register extends React.Component {
     defaultFormState = {
