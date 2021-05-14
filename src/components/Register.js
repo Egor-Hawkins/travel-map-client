@@ -1,7 +1,7 @@
 import React from "react";
-import "../css/Background.css";
-import formStyle from "../css/Form.module.css";
-import style from "../css/Register.module.css";
+import "../css/Background.scss";
+import formStyle from "../css/Form.module.scss";
+import style from "../css/Register.module.scss";
 import Sidebar from "./Sidebar.js";
 import {NavLink} from "react-router-dom";
 
@@ -71,6 +71,7 @@ export default class Register extends React.Component {
                 <div id="bg"/>
                 <div className={formStyle.form}>
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your email"
                         value={this.state.email}
@@ -78,6 +79,7 @@ export default class Register extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your username"
                         value={this.state.username}
@@ -85,6 +87,7 @@ export default class Register extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="password"
                         placeholder="Enter your password"
                         value={this.state.password}

@@ -1,6 +1,6 @@
 import React from "react";
-import "../css/Background.css";
-import formStyle from "../css/Form.module.css";
+import "../css/Background.scss";
+import formStyle from "../css/Form.module.scss";
 import "font-awesome/css/font-awesome.min.css";
 import Sidebar from "./Sidebar.js";
 
@@ -73,6 +73,7 @@ export default class Login extends React.Component {
                 <div id="bg"/>
                 <div className={formStyle.form}>
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your username"
                         value={this.state.username}
@@ -80,6 +81,7 @@ export default class Login extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="password"
                         placeholder="Enter your password"
                         value={this.state.password}

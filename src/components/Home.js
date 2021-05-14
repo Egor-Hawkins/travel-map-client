@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import "../css/Background.css";
+import "../css/Background.scss";
 import styles from "../css/Home.module.scss";
 import Sidebar from "./Sidebar.js";
 

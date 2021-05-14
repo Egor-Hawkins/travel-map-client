@@ -1,7 +1,9 @@
 import React from "react";
 import YandexMap from "./YandexMap";
 import {Redirect} from "react-router";
+import {Modal, Button} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
+import styles from "../css/CountryClick.module.scss";
 
 const axios = require("axios").default;
 const VISITED_COUNTRIES_PATH = "api/user/visited_countries";
@@ -23,19 +25,22 @@ const mapStyle = {
 const DEFAULT_OPTIONS = {
     type: "DEFAULT",
     fillColor: "#ffffff",
-    fillOpacity: 0.0
+    fillOpacity: 0.0,
+    visited: false
 };
 
-const SELECT_OPTIONS = {
-    type: "SELECT",
+const VISITED_OPTIONS = {
+    type: "VISITED",
     fillColor: "#fb6c3f",
-    fillOpacity: 0.8
+    fillOpacity: 0.8,
+    visited: true
 };
 
 const HIGHLIGHT_OPTIONS = {
     type: "HIGHLIGHT",
     fillColor: "#f5ab94",
-    fillOpacity: 0.6
+    fillOpacity: 0.6,
+    visited: false
 };
 
 export default class CountryClick extends React.Component {
@@ -43,27 +48,43 @@ export default class CountryClick extends React.Component {
         super(props);
 
         this.visitedISO = [];
+        this.targetCountry = null;
         this.state = {
             waitForServer: true,
-            loggedIn: false
+            loggedIn: false,
+            showModal: false,
+            targetCountryName: "",
+            targetCountryVisited: false
         };
     }
 
+    targetVisited = target => {
+        return target ? target.options.get("visited") : false;
+    };
+
+    targetName = target => {
+        return target ? target.properties._data.name : "";
+    };
+
+    targetIso = target => {
+        return target ? target.properties._data.iso3166 : "";
+    };
+
     enterCountry = event => {
         const target = event.get("target");
-        if (target.options.get("type") !== "SELECT") {
+        if (!this.targetVisited(target)) {
             target.options.set(HIGHLIGHT_OPTIONS);
         }
     };
 
     leaveCountry = event => {
         const target = event.get("target");
-        if (target.options.get("type") !== "SELECT") {
+        if (!this.targetVisited(target)) {
             target.options.set(DEFAULT_OPTIONS);
         }
     };
 
-    visit = iso => {
+    visitServer = iso => {
         axios.put(SERVER_VISITED_COUNTRIES_URL, {
             iso: iso
         }, {
@@ -74,7 +95,7 @@ export default class CountryClick extends React.Component {
         });
     };
 
-    unvisit = iso => {
+    unvisitServer = iso => {
         axios.delete(SERVER_VISITED_COUNTRIES_URL, {
             data: {
                 iso: iso
@@ -83,6 +104,31 @@ export default class CountryClick extends React.Component {
         }).catch((error) => {
             console.log("Error occurred!");
             console.log(error);
+        });
+    };
+
+    visitTargetCountry = target => {
+        const iso = this.targetIso(target);
+
+        if (this.targetVisited(target)) {
+            this.unvisitServer(iso);
+            target.options.set(DEFAULT_OPTIONS);
+        } else {
+            this.visitServer(iso);
+            target.options.set(VISITED_OPTIONS);
+        }
+
+        this.setState(prevState => ({
+            targetCountryVisited: !prevState.targetCountryVisited
+        }));
+    };
+
+    clickOnCountry = event => {
+        this.targetCountry = event.get("target");
+        this.setState({
+            showModal: true,
+            targetCountryName: this.targetName(this.targetCountry),
+            targetCountryVisited: this.targetVisited(this.targetCountry)
         });
     };
 
@@ -96,17 +142,9 @@ export default class CountryClick extends React.Component {
         return visitedCountries;
     };
 
-    clickOnCountry = event => {
-        const target = event.get("target");
-        const iso = target.properties._data.iso3166;
-        if (target.options.get("type") === "SELECT") {
-            this.unvisit(iso);
-            target.options.set(DEFAULT_OPTIONS);
-        } else {
-            this.visit(iso);
-            target.options.set(SELECT_OPTIONS);
-        }
-    };
+    handleModalClose = () => this.setState({
+        showModal: false
+    });
 
     componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
@@ -137,13 +175,31 @@ export default class CountryClick extends React.Component {
         return (
             <div className="Map">
                 <Sidebar/>
+                <Modal show={this.state.showModal} onHide={this.handleModalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.state.targetCountryName}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <button
+                            className={styles.visitBtn}
+                            onClick={() => this.visitTargetCountry(this.targetCountry)}
+                        >
+                            {this.state.targetCountryVisited ? "Unvisit" : "Visit"}
+                        </button>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleModalClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 <YandexMap
                     enterCountry={this.enterCountry}
                     leaveCountry={this.leaveCountry}
                     clickOnCountry={this.clickOnCountry}
                     visitedISO={this.visitedISO}
                     defaultOptions={DEFAULT_OPTIONS}
-                    selectOptions={SELECT_OPTIONS}
+                    visitedOptions={VISITED_OPTIONS}
                     mapState={mapState}
                     mapStyle={mapStyle}
                 />

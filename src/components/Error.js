@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Background.css";
+import "../css/Background.scss";
 import Sidebar from "./Sidebar.js";
 import styles from "../css/Home.module.scss";
 

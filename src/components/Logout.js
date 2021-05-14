@@ -1,6 +1,6 @@
 import React from "react";
-import "../css/Background.css";
-import formStyle from "../css/Form.module.css";
+import "../css/Background.scss";
+import formStyle from "../css/Form.module.scss";
 import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
