@@ -1,5 +1,6 @@
 import React from "react";
-import YandexMap from "./YandexMap";
+import YandexMap from "./YandexMap.js";
+import Cities from "./Cities.js";
 import {Redirect} from "react-router";
 import {Modal, Button} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
@@ -186,6 +187,7 @@ export default class CountryClick extends React.Component {
                         >
                             {this.state.targetCountryVisited ? "Unvisit" : "Visit"}
                         </button>
+                        {this.state.targetCountryVisited ? <Cities target={this.targetCountry}/> : null}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleModalClose}>
