@@ -35,7 +35,6 @@ export default class Ping extends React.Component {
                         ping
                     </button>
                 </div>
-                <br/><br/>
             </div>
         );
     }
