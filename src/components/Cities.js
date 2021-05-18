@@ -145,7 +145,7 @@ export default class Cities extends React.Component {
             this.unvisitCityServer(city, this.iso);
             this.visitedCities.delete(city);
         }
-        this.filterCurrentCitiesByPrefix(this.state.searchText);
+        this.selectCityName("");
     };
 
     componentDidMount() {
