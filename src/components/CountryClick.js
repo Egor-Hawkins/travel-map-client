@@ -102,7 +102,7 @@ export default class CountryClick extends React.Component {
                 iso: iso
             },
             withCredentials: true
-        }).catch((error) => {
+        }).catch(error => {
             console.log("Error occurred!");
             console.log(error);
         });
