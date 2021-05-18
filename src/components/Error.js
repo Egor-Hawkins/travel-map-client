@@ -1,14 +1,17 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
-import "../css/Background.css";
+import "../css/Background.scss";
+import Sidebar from "./Sidebar.js";
+import styles from "../css/Home.module.scss";
 
 export default class Error extends React.Component {
     render() {
         return (
             <div className="Error">
+                <Sidebar/>
                 <div id="bg"/>
-                <p>Error: Page does not exist!</p>
-                <NavLink to="/">Home</NavLink><br/>
+                <h1 className={styles.centered}>
+                    Error: Page does not exist!
+                </h1>
             </div>
         );
     }
