@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar.js";
 import {Redirect} from "react-router";
 import styles from "../css/Profile.module.scss";
+import formStyle from "../css/Form.module.scss";
 
 const axios = require("axios").default;
 const STATS_PATH = "api/user/stats";
@@ -54,6 +55,12 @@ export default class Profile extends React.Component {
         });
     }
 
+    updateStatsListVisibility = () => {
+        let status = document.getElementById("statsList").hidden //ya russkiy mne poebat
+        document.getElementById("statsList").hidden = !status
+        document.getElementById("visibilityButton").setAttribute("value", !status ? "Show extended stats" : "Hide extended stats")
+    }
+
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
         if (!this.state.loggedIn) return <Redirect to="/login"/>;
@@ -61,18 +68,39 @@ export default class Profile extends React.Component {
         return (
             <div className="Profile">
                 <Sidebar/>
-
-                <div className={styles.profile}>
-                    Username: {this.stats.username}
+                <span className={styles.line}/>
+                <div className={styles.name}>
+                    {this.stats.username}
+                </div>
+                <div className={styles.statsHeader}>
+                    User stats:
+                </div>
+                <div className={styles.mainStats}>
+                    <div className={styles.box}>
+                        Countries visited: {this.stats.countriesNumber}
+                    </div>
+                    <div className={styles.box}>
+                        Cities visited: {this.stats.totalCitiesNumber}
+                    </div>
                     <br/>
-                    Number of visited countries: {this.stats.countriesNumber}
-                    <br/>
-                    Number of visited cities: {this.stats.totalCitiesNumber}
-                    <br/>
-                    {this.stats.citiesStats.map((country, index) =>
-                        <li key={index}>
-                            {country.iso + " " + country.citiesNumber}
-                        </li>
+                </div>
+                <div className={styles.visibilityButton}>
+                    <input
+                        id="visibilityButton"
+                        className={styles.btn}
+                        type="submit"
+                        value="Show extended stats"
+                        onClick={() => this.updateStatsListVisibility()}
+                    />
+                </div>
+                <div id="statsList" className={styles.statsList} hidden={true}>
+                    <div className={styles.statsListHeader}>
+                        Visited cities stats:
+                    </div>
+                    {this.stats.citiesStats.map((country) =>
+                        <div className={styles.statsBox}>
+                            {country.name + ": " + country.citiesNumber}
+                        </div>
                     )}
                 </div>
             </div>
