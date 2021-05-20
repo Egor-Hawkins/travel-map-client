@@ -23,6 +23,7 @@ export default class Cities extends React.Component {
         this.selectedCity = null;
         this.iso = null;
         this.state = {
+            waitForServer: true,
             currentCities: [],
             currentVisitedCities: [],
             searchText: "",
@@ -157,6 +158,10 @@ export default class Cities extends React.Component {
             this.getVisitedCities(this.iso).then(visitedCities => {
                 this.visitedCities = SortedSet(visitedCities);
                 this.filterCurrentCitiesByPrefix("");
+
+                this.setState({
+                    waitForServer: false
+                });
             });
         }).catch(error => {
             console.log("Error occurred!");
@@ -165,8 +170,10 @@ export default class Cities extends React.Component {
     }
 
     render() {
+        if (this.state.waitForServer) return <div className="Cities">Loading...</div>;
+
         return (
-            <div className="Map">
+            <div className="Cities">
                 <input
                     type="text"
                     placeholder="Search by city"
