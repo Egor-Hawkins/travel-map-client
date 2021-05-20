@@ -1,7 +1,9 @@
 import React from "react";
+import "../css/Background.scss";
+import formStyle from "../css/Form.module.scss";
+import style from "../css/Register.module.scss";
+import Sidebar from "./Sidebar.js";
 import {NavLink} from "react-router-dom";
-import "../css/Background.css";
-import formStyle from "../css/Form.module.css";
 
 const axios = require("axios").default;
 const REGISTRATION_PATH = "registration";
@@ -43,15 +45,16 @@ export default class Register extends React.Component {
         }).then(result => {
             console.log("Ok!");
             console.log(result);
-            if (result.data.indexOf("Email not valid") >= 0) {
+            alert(result.data);
+            this.setState(this.defaultFormState);
+            window.open("/login", "_self");
+        }).catch(error => {
+            if (error.response.status === 400) {
                 alert("Email not valid");
             } else {
-                alert(result.data);
-                this.setState(this.defaultFormState);
+                console.log("Error occurred!");
+                console.log(error);
             }
-        }).catch((error) => {
-            console.log("Error occurred!");
-            console.log(error);
         });
     };
 
@@ -64,14 +67,11 @@ export default class Register extends React.Component {
     render() {
         return (
             <div className="Register">
+                <Sidebar/>
                 <div id="bg"/>
-                <div className={formStyle.homeIcon}>
-                    <NavLink className={formStyle.link} to="/">
-                        <i className="fa fa-home" aria-hidden="true"/>
-                    </NavLink>
-                </div>
                 <div className={formStyle.form}>
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your email"
                         value={this.state.email}
@@ -79,6 +79,7 @@ export default class Register extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your username"
                         value={this.state.username}
@@ -86,6 +87,7 @@ export default class Register extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="password"
                         placeholder="Enter your password"
                         value={this.state.password}
@@ -98,6 +100,12 @@ export default class Register extends React.Component {
                         value="Register"
                         onClick={this.register}
                     />
+                    <p className={style.txt}>
+                        Already registered?
+                    </p>
+                    <NavLink className={style.toLogin} to="/login">
+                        Login
+                    </NavLink>
                 </div>
             </div>
         );

@@ -8,7 +8,7 @@
   display: block;
 }
 
-input:not([type=submit]) {
+.input {
   width: 500px;
   padding: 12px 20px;
   margin: 20px 0;
@@ -42,11 +42,4 @@ input:not([type=submit]) {
 
 .link {
   text-decoration: none;
-  color: #ff493a;
 }
-
-.homeIcon {
-  width: 171px;
-  font-size: 60px;
-}
-

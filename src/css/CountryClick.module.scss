@@ -1,0 +1,11 @@
+@import "Form.module.scss";
+
+.visitBtn {
+  @extend .btn;
+
+  top: 0;
+  left: 50%;
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
+  margin-bottom: 10px;
+}

@@ -1,8 +1,8 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
-import "../css/Background.css";
-import formStyle from "../css/Form.module.css";
+import "../css/Background.scss";
+import formStyle from "../css/Form.module.scss";
 import "font-awesome/css/font-awesome.min.css";
+import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
@@ -51,7 +51,7 @@ export default class Login extends React.Component {
             alert(result.data);
             window.open("/map", "_self");
             this.setState(this.defaultFormState);
-        }).catch((error) => {
+        }).catch(error => {
             console.log("Error occurred!");
             console.log(error);
             if (error.response.status === 401) {
@@ -69,14 +69,11 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="Login">
+                <Sidebar/>
                 <div id="bg"/>
-                <div className={formStyle.homeIcon}>
-                    <NavLink className={formStyle.link} to="/">
-                        <i className="fa fa-home" aria-hidden="true"/>
-                    </NavLink>
-                </div>
                 <div className={formStyle.form}>
                     <input
+                        className={formStyle.input}
                         type="text"
                         placeholder="Enter your username"
                         value={this.state.username}
@@ -84,6 +81,7 @@ export default class Login extends React.Component {
                         onKeyDown={this.handleKeyDown}
                     />
                     <input
+                        className={formStyle.input}
                         type="password"
                         placeholder="Enter your password"
                         value={this.state.password}

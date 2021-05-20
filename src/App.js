@@ -1,5 +1,6 @@
 import React from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home.js";
 import Error from "./components/Error.js";
 import CountryClick from "./components/CountryClick.js";

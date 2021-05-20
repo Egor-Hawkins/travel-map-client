@@ -11,13 +11,13 @@ export default class YandexMap extends React.Component {
 
     addGeoObjects() {
         this.ymaps.borders.load("001", {
-            lang: "ru",
+            lang: "en",
             quality: 1
         }).then(result => {
             result.features.forEach(feature => {
                 let geoObject = new this.ymaps.GeoObject(feature);
                 if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
-                    geoObject.options.set(this.props.selectOptions);
+                    geoObject.options.set(this.props.visitedOptions);
                 } else {
                     geoObject.options.set(this.props.defaultOptions);
                 }
@@ -44,7 +44,7 @@ export default class YandexMap extends React.Component {
                 <YMaps
                     query={{
                         ns: "use-load-option",
-                        load: "Map,control.ZoomControl,borders,GeoObject",
+                        load: "Map,control.ZoomControl,borders,GeoObject"
                     }}
                 >
                     <Map
