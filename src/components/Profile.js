@@ -8,11 +8,6 @@ const STATS_PATH = "api/user/stats";
 const SERVER_STATS_URL = process.env.REACT_APP_SERVER_URL + STATS_PATH;
 
 export default class Profile extends React.Component {
-    buttonState = {
-        SHOW: "Show extended stats",
-        HIDE: "Hide extended stats"
-    };
-
     constructor(props) {
         super(props);
 
@@ -20,12 +15,13 @@ export default class Profile extends React.Component {
             username: "",
             countriesNumber: "",
             totalCitiesNumber: "",
-            citiesStats: [],
+            citiesStats: []
         };
+
         this.state = {
             waitForServer: true,
             loggedIn: false,
-            extendedStatsState: this.buttonState.SHOW
+            showExtendedStats: false
         };
     }
 
@@ -42,7 +38,6 @@ export default class Profile extends React.Component {
     componentDidMount() {
         this.getStats().then(stats => {
             this.stats = stats;
-            console.log(stats.citiesStats);
             this.setState({
                 waitForServer: false,
                 loggedIn: true
@@ -62,13 +57,14 @@ export default class Profile extends React.Component {
 
     updateStatsListVisibility = () => {
         this.setState({
-            extendedStatsState: (this.state.extendedStatsState === this.buttonState.SHOW) ? this.buttonState.HIDE : this.buttonState.SHOW
+            showExtendedStats: !this.state.showExtendedStats
         });
-    }
+    };
 
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
         if (!this.state.loggedIn) return <Redirect to="/login"/>;
+
         return (
             <div className="Profile">
                 <Sidebar/>
@@ -90,22 +86,22 @@ export default class Profile extends React.Component {
                 </div>
                 <div className={styles.visibilityButton}>
                     <input
-                        id="visibilityButton"
                         className={styles.btn}
                         type="submit"
-                        value={this.state.extendedStatsState}
-                        onClick={() => this.updateStatsListVisibility()}
+                        value={(this.state.showExtendedStats ? "Hide" : "Show") + " extended stats"}
+                        onClick={this.updateStatsListVisibility}
                     />
                 </div>
-                <div id="statsList" className={styles.statsList}
-                     style={{
-                         display: (this.state.extendedStatsState === this.buttonState.SHOW) ? "none" : "inline-block"
-                     }}
+                <div
+                    className={styles.statsList}
+                    style={{
+                        display: this.state.showExtendedStats ? "inline-block" : "none"
+                    }}
                 >
                     <div className={styles.statsListHeader}>
                         Visited cities stats:
                     </div>
-                    {this.stats.citiesStats.map((country) =>
+                    {this.stats.citiesStats.map(country =>
                         <div className={styles.statsBox}>
                             {country.name + ": " + country.citiesNumber}
                         </div>
