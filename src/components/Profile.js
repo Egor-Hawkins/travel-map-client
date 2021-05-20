@@ -2,13 +2,17 @@ import React from "react";
 import Sidebar from "./Sidebar.js";
 import {Redirect} from "react-router";
 import styles from "../css/Profile.module.scss";
-import formStyle from "../css/Form.module.scss";
 
 const axios = require("axios").default;
 const STATS_PATH = "api/user/stats";
 const SERVER_STATS_URL = process.env.REACT_APP_SERVER_URL + STATS_PATH;
 
 export default class Profile extends React.Component {
+    buttonState = {
+        SHOW: "Show extended stats",
+        HIDE: "Hide extended stats"
+    };
+
     constructor(props) {
         super(props);
 
@@ -16,11 +20,12 @@ export default class Profile extends React.Component {
             username: "",
             countriesNumber: "",
             totalCitiesNumber: "",
-            citiesStats: []
+            citiesStats: [],
         };
         this.state = {
             waitForServer: true,
-            loggedIn: false
+            loggedIn: false,
+            extendedStatsState: this.buttonState.SHOW
         };
     }
 
@@ -56,15 +61,14 @@ export default class Profile extends React.Component {
     }
 
     updateStatsListVisibility = () => {
-        let status = document.getElementById("statsList").hidden //ya russkiy mne poebat
-        document.getElementById("statsList").hidden = !status
-        document.getElementById("visibilityButton").setAttribute("value", !status ? "Show extended stats" : "Hide extended stats")
+        this.setState({
+            extendedStatsState: (this.state.extendedStatsState === this.buttonState.SHOW) ? this.buttonState.HIDE : this.buttonState.SHOW
+        });
     }
 
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
         if (!this.state.loggedIn) return <Redirect to="/login"/>;
-
         return (
             <div className="Profile">
                 <Sidebar/>
@@ -89,11 +93,15 @@ export default class Profile extends React.Component {
                         id="visibilityButton"
                         className={styles.btn}
                         type="submit"
-                        value="Show extended stats"
+                        value={this.state.extendedStatsState}
                         onClick={() => this.updateStatsListVisibility()}
                     />
                 </div>
-                <div id="statsList" className={styles.statsList} hidden={true}>
+                <div id="statsList" className={styles.statsList}
+                     style={{
+                         display: (this.state.extendedStatsState === this.buttonState.SHOW) ? "none" : "inline-block"
+                     }}
+                >
                     <div className={styles.statsListHeader}>
                         Visited cities stats:
                     </div>
