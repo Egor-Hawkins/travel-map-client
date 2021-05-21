@@ -5,13 +5,11 @@ import styles from "../css/Friends.module.scss";
 import {getFriendsList} from "./Profile.js";
 
 const axios = require("axios").default;
-const API_PATH = "api/user";
-const STATS_PATH = API_PATH + "/stats";
-const FRIENDS_PATH = API_PATH + "/friends";
+const FRIENDS_PATH = "api/user/friends";
 const FRIENDS_REQUEST_PATH = FRIENDS_PATH + "/request";
-const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "send";
-const SERVER_STATS_URL = process.env.REACT_APP_SERVER_URL + STATS_PATH;
-const SERVER_FRIENDS_LIST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_PATH;
+const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "/send";
+const SERVER_FRIENDS_REQUEST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_PATH;
+const SERVER_FRIENDS_REQUEST_SEND_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_SEND_PATH;
 
 export default class Friends extends React.Component {
     constructor(props) {
@@ -21,17 +19,103 @@ export default class Friends extends React.Component {
             waitForServer: true,
             loggedIn: false,
             friendsList: null,
+            myFriendRequests: null,
+            friendRequestsToMe: null,
             searchText: ""
         };
     }
 
+    sendFriendRequest = async username => {
+        let response = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_SEND_URL, {
+            friendName: username
+        }, {
+            withCredentials: true
+        }).then(result => {
+            response = result;
+        }).catch(error => {
+            response = error.response;
+        });
+        return response;
+    };
+
+    getFriendRequests = async myRequests => {
+        let requestsList = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_URL, {
+            myRequests: myRequests
+        }, {
+            withCredentials: true
+        }).then(result => {
+            requestsList = result.data;
+        }).catch(error => {
+            console.log("Error occurred!");
+            console.log(error);
+        });
+        return requestsList;
+    };
+
+    getMyFriendRequests = async () => {
+        return this.getFriendRequests(true);
+    };
+
+    getFriendRequestsToMe = async () => {
+        return this.getFriendRequests(false);
+    };
+
+    handleSearchbarChange = event => {
+        const nextSearchText = event.target.value;
+
+        this.setState({
+            searchText: nextSearchText
+        });
+    };
+
+    updateLists = () => {
+        getFriendsList().then(friendsList => {
+            this.getMyFriendRequests().then(myFriendRequests => {
+                this.getFriendRequestsToMe().then(friendRequestsToMe => {
+                    this.setState({
+                        friends: friendsList,
+                        myFriendRequests: myFriendRequests,
+                        friendRequestsToMe: friendRequestsToMe
+                    });
+                });
+            });
+        });
+    };
+
+
+    addFriend = username => {
+        this.sendFriendRequest(username).then(result => {
+            if (result) {
+                const status = result.status;
+                if (status === 404) {
+                    alert("No user with name " + username + " exists");
+                } else if (status === 400) {
+                    alert("Friend request to " + username + " already sent");
+                } else if (status === 200) {
+                    alert("Friend request to " + username + " sent");
+                }
+            }
+            this.updateLists();
+        });
+        this.setState({
+            searchText: ""
+        });
+    };
 
     componentDidMount() {
         getFriendsList().then(friendsList => {
-            this.setState({
-                waitForServer: false,
-                loggedIn: true,
-                friends: friendsList
+            this.getMyFriendRequests().then(myFriendRequests => {
+                this.getFriendRequestsToMe().then(friendRequestsToMe => {
+                    this.setState({
+                        waitForServer: false,
+                        loggedIn: true,
+                        friends: friendsList,
+                        myFriendRequests: myFriendRequests,
+                        friendRequestsToMe: friendRequestsToMe
+                    });
+                });
             });
         }).catch(error => {
             if (error.response && error.response.status === 401) {
@@ -46,6 +130,11 @@ export default class Friends extends React.Component {
         });
     }
 
+    handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            this.addFriend(this.state.searchText);
+        }
+    };
 
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
@@ -56,11 +145,52 @@ export default class Friends extends React.Component {
                 <Sidebar/>
                 <div className={styles.friends}>
                     Friends:
-                    {this.state.friends.map((friend, index) =>
-                        <li key={index}>
-                            {friend}
-                        </li>
-                    )}
+                    <br/>
+                    <div className={styles.friendList}>
+                        {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
+                            <li key={index}>
+                                {friend}
+                            </li>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.addFriends}>
+                    Add friend:
+                    <br/>
+                    <input
+                        className={styles.searchBar}
+                        type="text"
+                        placeholder="Search by username"
+                        value={this.state.searchText}
+                        onChange={this.handleSearchbarChange}
+                        onKeyDown={this.handleKeyDown}
+                    />
+                    <button
+                        className={styles.addFriendBtn}
+                        onClick={() => this.addFriend(this.state.searchText)}
+                    >
+                        Add friend
+                    </button>
+                </div>
+                <div className={styles.myRequests}>
+                    My Requests:
+                    <div className={styles.friendList}>
+                        {this.state.myFriendRequests.length === 0 ? "No requests yet" : this.state.myFriendRequests.map((friend, index) =>
+                            <li key={index}>
+                                {friend}
+                            </li>
+                        )}
+                    </div>
+                </div>
+                <div className={styles.requestsToMe}>
+                    Requests to me:
+                    <div className={styles.friendList}>
+                        {this.state.friendRequestsToMe.length === 0 ? "No requests yet" : this.state.friendRequestsToMe.map((friend, index) =>
+                            <li key={index}>
+                                {friend}
+                            </li>
+                        )}
+                    </div>
                 </div>
             </div>
         );

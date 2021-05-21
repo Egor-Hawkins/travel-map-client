@@ -1,14 +1,22 @@
 @import "Cities.module.scss";
 
 .friends {
+  position: absolute;
+  font-size: 50px;
+  top: 50px;
+  left: 100px;
+}
 
+.friendList {
+  margin-top: 20px;
+  font-size: 30px;
 }
 
 .addFriends {
   position: absolute;
   font-size: 50px;
-  top: 200px;
-  left: 1000px;
+  top: 50px;
+  left: 350px;
 }
 
 .searchBar {
@@ -19,4 +27,18 @@
   @extend .visitBtn;
 
   font-size: 30px;
+}
+
+.myRequests {
+  position: absolute;
+  font-size: 50px;
+  top: 50px;
+  left: 850px;
+}
+
+.requestsToMe {
+  position: absolute;
+  font-size: 50px;
+  top: 50px;
+  left: 1200px;
 }

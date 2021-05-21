@@ -5,11 +5,8 @@ import styles from "../css/Profile.module.scss";
 import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
-const API_PATH = "api/user";
-const STATS_PATH = API_PATH + "/stats";
-const FRIENDS_PATH = API_PATH + "/friends";
-const FRIENDS_REQUEST_PATH = FRIENDS_PATH + "/request";
-const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "send";
+const STATS_PATH = "api/user/stats";
+const FRIENDS_PATH = "api/user/friends";
 const SERVER_STATS_URL = process.env.REACT_APP_SERVER_URL + STATS_PATH;
 const SERVER_FRIENDS_LIST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_PATH;
 
@@ -51,18 +48,6 @@ export default class Profile extends React.Component {
         this.setState({
             showExtendedStats: !this.state.showExtendedStats
         });
-    };
-
-    handleSearchbarChange = event => {
-        const nextSearchText = event.target.value;
-
-        this.setState({
-            searchText: nextSearchText
-        });
-    };
-
-    addFriend = () => {
-
     };
 
     componentDidMount() {
