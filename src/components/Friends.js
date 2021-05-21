@@ -3,6 +3,8 @@ import Sidebar from "./Sidebar.js";
 import {Redirect} from "react-router";
 import styles from "../css/Friends.module.scss";
 import {getFriendsList} from "./Profile.js";
+import {Button, Modal} from "react-bootstrap";
+import FriendProfile from "./FriendProfile.js";
 
 const axios = require("axios").default;
 const FRIENDS_PATH = "api/user/friends";
@@ -21,7 +23,9 @@ export default class Friends extends React.Component {
             friendsList: null,
             myFriendRequests: null,
             friendRequestsToMe: null,
-            searchText: ""
+            searchText: "",
+            showModal: false,
+            selectedFriend: null
         };
     }
 
@@ -104,6 +108,23 @@ export default class Friends extends React.Component {
         });
     };
 
+    handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            this.addFriend(this.state.searchText);
+        }
+    };
+
+    handleModalClose = () => this.setState({
+        showModal: false
+    });
+
+    openModal = friendName => {
+        this.setState({
+            showModal: true,
+            selectedFriend: friendName
+        });
+    };
+
     componentDidMount() {
         getFriendsList().then(friendsList => {
             this.getMyFriendRequests().then(myFriendRequests => {
@@ -130,12 +151,6 @@ export default class Friends extends React.Component {
         });
     }
 
-    handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-            this.addFriend(this.state.searchText);
-        }
-    };
-
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
         if (!this.state.loggedIn) return <Redirect to="/login"/>;
@@ -143,13 +158,30 @@ export default class Friends extends React.Component {
         return (
             <div className="Friends">
                 <Sidebar/>
+                <Modal show={this.state.showModal} onHide={this.handleModalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.state.selectedFriend}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FriendProfile
+                            friendName={this.state.selectedFriend}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleModalClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 <div className={styles.friends}>
                     Friends:
                     <br/>
                     <div className={styles.friendList}>
                         {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
                             <li key={index}>
-                                {friend}
+                                <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
+                                    {friend}
+                                </span>
                             </li>
                         )}
                     </div>
