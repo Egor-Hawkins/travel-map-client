@@ -5,23 +5,46 @@ import Sidebar from "./Sidebar.js";
 
 const axios = require("axios").default;
 const PING_PATH = "api/ping";
+const HEALTH_PATH = "health";
 const SERVER_PING_URL = process.env.REACT_APP_SERVER_URL + PING_PATH;
+const SERVER_HEALTH_URL = process.env.REACT_APP_SERVER_URL + HEALTH_PATH;
+
+export async function health() {
+    let health = null;
+    await axios.get(SERVER_HEALTH_URL).then(result => {
+        health = result.data;
+    }).catch(error => {
+        health = error;
+    });
+    return health;
+}
 
 export default class Ping extends React.Component {
-    ping = () => {
-        axios.get(SERVER_PING_URL, {
+    ping = async () => {
+        let ping = null;
+        await axios.get(SERVER_PING_URL, {
             withCredentials: true
         }).then(result => {
-            console.log("Ok!");
-            console.log(result);
-            alert(result.data);
+            ping = result.data;
         }).catch(error => {
-            if (error.response.status === 401) {
-                alert("Not logged in");
+            if (error.response && error.response.status === 401) {
+                ping = "Not logged in";
             } else {
-                console.log("Error occurred!");
-                console.log(error);
+                ping = error;
             }
+        });
+        return ping;
+    };
+
+    getPing = () => {
+        this.ping().then(result => {
+            alert(result);
+        });
+    };
+
+    getHealth = () => {
+        health().then(result => {
+            alert(result);
         });
     };
 
@@ -31,7 +54,11 @@ export default class Ping extends React.Component {
                 <Sidebar/>
                 <div id="bg"/>
                 <div className={formStyle.form}>
-                    <button className={formStyle.btn} onClick={this.ping}>
+                    <button className={formStyle.btn} onClick={this.getHealth}>
+                        health
+                    </button>
+                    <br/><br/>
+                    <button className={formStyle.btn} onClick={this.getPing}>
                         ping
                     </button>
                 </div>
