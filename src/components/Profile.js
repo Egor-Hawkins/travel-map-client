@@ -2,26 +2,38 @@ import React from "react";
 import Sidebar from "./Sidebar.js";
 import {Redirect} from "react-router";
 import styles from "../css/Profile.module.scss";
+import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
-const STATS_PATH = "api/user/stats";
+const API_PATH = "api/user";
+const STATS_PATH = API_PATH + "/stats";
+const FRIENDS_PATH = API_PATH + "/friends";
+const FRIENDS_REQUEST_PATH = FRIENDS_PATH + "/request";
+const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "send";
 const SERVER_STATS_URL = process.env.REACT_APP_SERVER_URL + STATS_PATH;
+const SERVER_FRIENDS_LIST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_PATH;
+
+export async function getFriendsList() {
+    let friends = null;
+    await axios.get(SERVER_FRIENDS_LIST_URL, {
+        withCredentials: true
+    }).then(result => {
+        friends = result.data;
+    });
+    return friends;
+}
 
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.stats = {
-            username: "",
-            countriesNumber: "",
-            totalCitiesNumber: "",
-            citiesStats: []
-        };
-
         this.state = {
             waitForServer: true,
             loggedIn: false,
-            showExtendedStats: false
+            showExtendedStats: false,
+            stats: null,
+            friends: null,
+            searchText: ""
         };
     }
 
@@ -35,12 +47,33 @@ export default class Profile extends React.Component {
         return stats;
     };
 
+    updateStatsListVisibility = () => {
+        this.setState({
+            showExtendedStats: !this.state.showExtendedStats
+        });
+    };
+
+    handleSearchbarChange = event => {
+        const nextSearchText = event.target.value;
+
+        this.setState({
+            searchText: nextSearchText
+        });
+    };
+
+    addFriend = () => {
+
+    };
+
     componentDidMount() {
         this.getStats().then(stats => {
-            this.stats = stats;
-            this.setState({
-                waitForServer: false,
-                loggedIn: true
+            getFriendsList().then(friends => {
+                this.setState({
+                    waitForServer: false,
+                    loggedIn: true,
+                    stats: stats,
+                    friends: friends
+                });
             });
         }).catch(error => {
             if (error.response && error.response.status === 401) {
@@ -55,12 +88,6 @@ export default class Profile extends React.Component {
         });
     }
 
-    updateStatsListVisibility = () => {
-        this.setState({
-            showExtendedStats: !this.state.showExtendedStats
-        });
-    };
-
     render() {
         if (this.state.waitForServer) return <span>Loading profile...</span>;
         if (!this.state.loggedIn) return <Redirect to="/login"/>;
@@ -70,23 +97,39 @@ export default class Profile extends React.Component {
                 <Sidebar/>
                 <span className={styles.line}/>
                 <div className={styles.name}>
-                    {this.stats.username}
+                    {this.state.stats.username}
                 </div>
                 <div className={styles.statsHeader}>
                     User stats:
                 </div>
+                <div className={styles.friends}>
+                    Friends:
+                    <br/>
+                    <div className={styles.friendList}>
+                        {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
+                            <li key={index}>
+                                {friend}
+                            </li>
+                        )}
+                    </div>
+                </div>
+                <NavLink className={styles.link} to="/friends">
+                    <button className={styles.manageFriendList}>
+                        Manage friend list
+                    </button>
+                </NavLink>
                 <div className={styles.mainStats}>
                     <div className={styles.box}>
-                        Countries visited: {this.stats.countriesNumber}
+                        Countries visited: {this.state.stats.countriesNumber}
                     </div>
                     <div className={styles.box}>
-                        Cities visited: {this.stats.totalCitiesNumber}
+                        Cities visited: {this.state.stats.totalCitiesNumber}
                     </div>
                     <br/>
                 </div>
                 <div className={styles.visibilityButton}>
                     <input
-                        className={styles.btn}
+                        className={styles.statsBtn}
                         type="submit"
                         value={(this.state.showExtendedStats ? "Hide" : "Show") + " extended stats"}
                         onClick={this.updateStatsListVisibility}
@@ -101,7 +144,7 @@ export default class Profile extends React.Component {
                     <div className={styles.statsListHeader}>
                         Visited cities stats:
                     </div>
-                    {this.stats.citiesStats.map(country =>
+                    {this.state.stats.citiesStats.map(country =>
                         <div className={styles.statsBox}>
                             {country.name + ": " + country.citiesNumber}
                         </div>

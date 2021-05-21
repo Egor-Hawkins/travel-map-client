@@ -1,0 +1,22 @@
+@import "Cities.module.scss";
+
+.friends {
+
+}
+
+.addFriends {
+  position: absolute;
+  font-size: 50px;
+  top: 200px;
+  left: 1000px;
+}
+
+.searchBar {
+  font-size: 30px;
+}
+
+.addFriendBtn {
+  @extend .visitBtn;
+
+  font-size: 30px;
+}
