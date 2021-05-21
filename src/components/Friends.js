@@ -93,6 +93,7 @@ export default class Friends extends React.Component {
         this.sendFriendRequest(username).then(result => {
             if (result) {
                 const status = result.status;
+                console.log(result);
                 if (status === 404) {
                     alert("No user with name " + username + " exists");
                 } else if (status === 400) {
