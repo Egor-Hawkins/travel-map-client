@@ -1,5 +1,5 @@
 import React from "react";
-import {YMaps, Map} from "react-yandex-maps";
+import {Map, YMaps} from "react-yandex-maps";
 
 export default class YandexMap extends React.Component {
     constructor(props) {

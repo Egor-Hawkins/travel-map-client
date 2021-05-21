@@ -5,6 +5,7 @@ import Home from "./components/Home.js";
 import Error from "./components/Error.js";
 import CountryClick from "./components/CountryClick.js";
 import Profile from "./components/Profile.js";
+import Friends from "./components/Friends.js";
 import Register from "./components/Register.js";
 import Login from "./components/Login.js";
 import Ping from "./components/Ping.js";
@@ -19,6 +20,7 @@ export default class App extends React.Component {
                         <Route path="/" component={Home} exact/>
                         <Route path="/map" component={CountryClick} exact/>
                         <Route path="/profile" component={Profile} exact/>
+                        <Route path="/friends" component={Friends} exact/>
                         <Route path="/registration" component={Register}/>
                         <Route path="/login" component={Login}/>
                         <Route path="/ping" component={Ping}/>

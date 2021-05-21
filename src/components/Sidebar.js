@@ -12,6 +12,7 @@ export default class Sidebar extends React.Component {
                 <NavLink className="menu-item" to="/login">Login</NavLink>
                 <NavLink className="menu-item" to="/ping">Ping</NavLink>
                 <NavLink className="menu-item" to="/profile">Profile</NavLink>
+                <NavLink className="menu-item" to="/friends">Friends</NavLink>
                 <NavLink className="menu-item" to="/map">Map</NavLink>
                 <NavLink className="menu-item" to="/logout">Logout</NavLink>
             </Menu>

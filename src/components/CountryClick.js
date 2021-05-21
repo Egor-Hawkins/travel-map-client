@@ -2,7 +2,7 @@ import React from "react";
 import YandexMap from "./YandexMap.js";
 import Cities from "./Cities.js";
 import {Redirect} from "react-router";
-import {Modal, Button} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
 import styles from "../css/CountryClick.module.scss";
 

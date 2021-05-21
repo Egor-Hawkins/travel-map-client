@@ -1,0 +1,25 @@
+@import "Profile.module.scss";
+
+.FriendProfile {
+  font-size: 25px;
+  margin-bottom: 50px;
+}
+
+.friendStatsBtn {
+  @extend .statsBtn;
+
+  font-size: inherit;
+  width: 250px;
+  height: 50px;
+}
+
+.friendStatsList {
+  position: relative;
+  top: 50px;
+}
+
+.friendStatsBox {
+  @extend .statsBox;
+
+  margin-left: 0;
+}
