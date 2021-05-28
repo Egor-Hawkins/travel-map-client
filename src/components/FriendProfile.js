@@ -61,6 +61,10 @@ export default class FriendProfile extends React.Component {
                 <br/>
                 Cities visited: {this.state.stats.totalCitiesNumber}
                 <br/>
+                Common countries visited: {this.state.stats.commonCountries}
+                <br/>
+                Common cities visited: {this.state.stats.totalCommonCities}
+                <br/>
                 <input
                     className={styles.friendStatsBtn}
                     type="submit"
