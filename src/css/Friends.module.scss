@@ -1,5 +1,6 @@
 @import "Cities.module.scss";
 @import "Form.module.scss";
+@import "~font-awesome/scss/font-awesome";
 
 .col {
   width: 22vw;
@@ -33,4 +34,16 @@
   margin-left: 0;
   margin-top: 1vh;
   display: block;
+}
+
+.declineRequestBtn {
+  color: red;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.acceptRequestBtn {
+  color: limegreen;
+  cursor: pointer;
+  font-size: 22px;
 }

@@ -9,11 +9,17 @@ import FriendProfile from "./FriendProfile.js";
 const axios = require("axios").default;
 const FRIENDS_PATH = "api/user/friends";
 const FRIENDS_REQUEST_PATH = FRIENDS_PATH + "/request";
-const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "/send";
 const FRIENDS_REMOVE_PATH = FRIENDS_PATH + "/remove";
+const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "/send";
+const FRIENDS_REQUEST_CANCEL_PATH = FRIENDS_REQUEST_PATH + "/cancel";
+const FRIENDS_REQUEST_ACCEPT_PATH = FRIENDS_REQUEST_PATH + "/accept";
+const FRIENDS_REQUEST_DECLINE_PATH = FRIENDS_REQUEST_PATH + "/decline";
+const SERVER_FRIENDS_REMOVE_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REMOVE_PATH;
 const SERVER_FRIENDS_REQUEST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_PATH;
 const SERVER_FRIENDS_REQUEST_SEND_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_SEND_PATH;
-const SERVER_FRIENDS_REQUEST_REMOVE_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REMOVE_PATH;
+const SERVER_FRIENDS_REQUEST_CANCEL_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_CANCEL_PATH;
+const SERVER_FRIENDS_REQUEST_ACCEPT_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_ACCEPT_PATH;
+const SERVER_FRIENDS_REQUEST_DECLINE_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_DECLINE_PATH;
 
 export default class Friends extends React.Component {
     constructor(props) {
@@ -45,7 +51,43 @@ export default class Friends extends React.Component {
 
     removeFriend = async username => {
         let response = null;
-        await axios.post(SERVER_FRIENDS_REQUEST_REMOVE_URL, {
+        await axios.post(SERVER_FRIENDS_REMOVE_URL, {
+            friendName: username
+        }, {
+            withCredentials: true
+        }).then(result => {
+            response = result;
+        });
+        return response;
+    };
+
+    cancelFriendRequest = async username => {
+        let response = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_CANCEL_URL, {
+            friendName: username
+        }, {
+            withCredentials: true
+        }).then(result => {
+            response = result;
+        });
+        return response;
+    };
+
+    acceptFriendRequest = async username => {
+        let response = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_ACCEPT_URL, {
+            friendName: username
+        }, {
+            withCredentials: true
+        }).then(result => {
+            response = result;
+        });
+        return response;
+    };
+
+    declineFriendRequest = async username => {
+        let response = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_DECLINE_URL, {
             friendName: username
         }, {
             withCredentials: true
@@ -86,6 +128,15 @@ export default class Friends extends React.Component {
         });
     };
 
+    handleError = error => {
+        if (error.response && error.response.data) {
+            alert(error.response.data);
+        } else {
+            console.log("Error occurred!");
+            console.log(error);
+        }
+    };
+
     updateLists = () => {
         getFriendsList().then(friendsList => {
             this.getMyFriendRequests().then(myFriendRequests => {
@@ -109,12 +160,7 @@ export default class Friends extends React.Component {
         this.sendFriendRequest(username).then(() => {
             this.updateLists();
         }).catch(error => {
-            if (error.response && error.response.data) {
-                alert(error.response.data);
-            } else {
-                console.log("Error occurred!");
-                console.log(error);
-            }
+            this.handleError(error);
         });
         this.setState({
             searchText: ""
@@ -135,15 +181,33 @@ export default class Friends extends React.Component {
         this.removeFriend(this.state.selectedFriend).then(() => {
             this.updateLists();
         }).catch(error => {
-            if (error.response && error.response.data) {
-                alert(error.response.data);
-            } else {
-                console.log("Error occurred!");
-                console.log(error);
-            }
+            this.handleError(error);
         });
-
         this.handleModalClose();
+    };
+
+    handleCancelMyRequest = friendName => {
+        this.cancelFriendRequest(friendName).then(() => {
+            this.updateLists();
+        }).catch(error => {
+            this.handleError(error);
+        });
+    };
+
+    handleAcceptRequest = friendName => {
+        this.acceptFriendRequest(friendName).then(() => {
+            this.updateLists();
+        }).catch(error => {
+            this.handleError(error);
+        });
+    };
+
+    handleDeclineRequest = friendName => {
+        this.declineFriendRequest(friendName).then(() => {
+            this.updateLists();
+        }).catch(error => {
+            this.handleError(error);
+        });
     };
 
     openModal = friendName => {
@@ -249,7 +313,13 @@ export default class Friends extends React.Component {
                         >
                             {this.state.myFriendRequests.length === 0 ? "No requests yet" : this.state.myFriendRequests.map((friend, index) =>
                                 <li key={index}>
-                                    {friend}
+                                    {friend}&nbsp;
+                                    <span
+                                        className={styles.declineRequestBtn}
+                                        onClick={() => this.handleCancelMyRequest(friend)}
+                                    >
+                                        <i className="fa fa-ban" aria-hidden="true"/>
+                                    </span>
                                 </li>
                             )}
                         </ul>
@@ -264,7 +334,20 @@ export default class Friends extends React.Component {
                         >
                             {this.state.friendRequestsToMe.length === 0 ? "No requests yet" : this.state.friendRequestsToMe.map((friend, index) =>
                                 <li key={index}>
-                                    {friend}
+                                    {friend}&nbsp;
+                                    <span
+                                        className={styles.acceptRequestBtn}
+                                        onClick={() => this.handleAcceptRequest(friend)}
+                                    >
+                                        <i className="fa fa-check" aria-hidden="true"/>
+                                    </span>
+                                    &nbsp;
+                                    <span
+                                        className={styles.declineRequestBtn}
+                                        onClick={() => this.handleDeclineRequest(friend)}
+                                    >
+                                       <i className="fa fa-ban" aria-hidden="true"/>
+                                    </span>
                                 </li>
                             )}
                         </ul>
