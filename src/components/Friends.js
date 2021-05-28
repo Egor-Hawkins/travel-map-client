@@ -10,8 +10,10 @@ const axios = require("axios").default;
 const FRIENDS_PATH = "api/user/friends";
 const FRIENDS_REQUEST_PATH = FRIENDS_PATH + "/request";
 const FRIENDS_REQUEST_SEND_PATH = FRIENDS_REQUEST_PATH + "/send";
+const FRIENDS_REMOVE_PATH = FRIENDS_PATH + "/remove";
 const SERVER_FRIENDS_REQUEST_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_PATH;
 const SERVER_FRIENDS_REQUEST_SEND_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REQUEST_SEND_PATH;
+const SERVER_FRIENDS_REQUEST_REMOVE_URL = process.env.REACT_APP_SERVER_URL + FRIENDS_REMOVE_PATH;
 
 export default class Friends extends React.Component {
     constructor(props) {
@@ -37,8 +39,18 @@ export default class Friends extends React.Component {
             withCredentials: true
         }).then(result => {
             response = result;
-        }).catch(error => {
-            response = error.response;
+        });
+        return response;
+    };
+
+    removeFriend = async username => {
+        let response = null;
+        await axios.post(SERVER_FRIENDS_REQUEST_REMOVE_URL, {
+            friendName: username
+        }, {
+            withCredentials: true
+        }).then(result => {
+            response = result;
         });
         return response;
     };
@@ -88,26 +100,21 @@ export default class Friends extends React.Component {
         });
     };
 
-
     addFriend = username => {
         if (username === "") {
             alert("Please enter friend username");
             return;
         }
 
-        this.sendFriendRequest(username).then(result => {
-            if (result && result.data) {
-                const status = result.status;
-                alert(result.data);
-                // if (status === 404) {
-                //     alert("No user with name " + username + " exists");
-                // } else if (status === 400) {
-                //     alert("Friend request to " + username + " already sent");
-                // } else if (status === 200) {
-                //     alert("Friend request to " + username + " sent");
-                // }
-            }
+        this.sendFriendRequest(username).then(() => {
             this.updateLists();
+        }).catch(error => {
+            if (error.response && error.response.data) {
+                alert(error.response.data);
+            } else {
+                console.log("Error occurred!");
+                console.log(error);
+            }
         });
         this.setState({
             searchText: ""
@@ -123,6 +130,21 @@ export default class Friends extends React.Component {
     handleModalClose = () => this.setState({
         showModal: false
     });
+
+    handleFriendDelete = () => {
+        this.removeFriend(this.state.selectedFriend).then(() => {
+            this.updateLists();
+        }).catch(error => {
+            if (error.response && error.response.data) {
+                alert(error.response.data);
+            } else {
+                console.log("Error occurred!");
+                console.log(error);
+            }
+        });
+
+        this.handleModalClose();
+    };
 
     openModal = friendName => {
         this.setState({
@@ -174,6 +196,9 @@ export default class Friends extends React.Component {
                         />
                     </Modal.Body>
                     <Modal.Footer>
+                        <Button variant="danger" onClick={this.handleFriendDelete}>
+                            Delete from friends
+                        </Button>
                         <Button variant="secondary" onClick={this.handleModalClose}>
                             Close
                         </Button>
@@ -182,7 +207,12 @@ export default class Friends extends React.Component {
                 <div className={styles.friends}>
                     <div className={styles.col}>
                         Friends:
-                        <ul className={styles.friendList}>
+                        <ul
+                            className={styles.friendList}
+                            style={{
+                                "padding-left": this.state.friends.length === 0 ? "0" : "1.5vw"
+                            }}
+                        >
                             {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
                                 <li key={index}>
                                 <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
@@ -211,7 +241,12 @@ export default class Friends extends React.Component {
                     </div>
                     <div className={styles.col}>
                         My Requests:
-                        <ul className={styles.friendList}>
+                        <ul
+                            className={styles.friendList}
+                            style={{
+                                "padding-left": this.state.myFriendRequests.length === 0 ? "0" : "1.5vw"
+                            }}
+                        >
                             {this.state.myFriendRequests.length === 0 ? "No requests yet" : this.state.myFriendRequests.map((friend, index) =>
                                 <li key={index}>
                                     {friend}
@@ -221,7 +256,12 @@ export default class Friends extends React.Component {
                     </div>
                     <div className={styles.col}>
                         Requests to me:
-                        <ul className={styles.friendList}>
+                        <ul
+                            className={styles.friendList}
+                            style={{
+                                "padding-left": this.state.friendRequestsToMe.length === 0 ? "0" : "1.5vw"
+                            }}
+                        >
                             {this.state.friendRequestsToMe.length === 0 ? "No requests yet" : this.state.friendRequestsToMe.map((friend, index) =>
                                 <li key={index}>
                                     {friend}
