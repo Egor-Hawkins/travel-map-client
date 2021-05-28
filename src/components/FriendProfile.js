@@ -81,7 +81,9 @@ export default class FriendProfile extends React.Component {
                     Visited cities stats:
                     {this.state.stats.citiesStats.map(country =>
                         <div className={styles.friendStatsBox}>
-                            {country.name + ": " + country.citiesNumber}
+                            <div className={styles.longText}>
+                                {country.name + ": " + country.citiesNumber}
+                            </div>
                         </div>
                     )}
                 </div>

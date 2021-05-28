@@ -96,16 +96,16 @@ export default class Friends extends React.Component {
         }
 
         this.sendFriendRequest(username).then(result => {
-            if (result) {
+            if (result && result.data) {
                 const status = result.status;
-                console.log(result);
-                if (status === 404) {
-                    alert("No user with name " + username + " exists");
-                } else if (status === 400) {
-                    alert("Friend request to " + username + " already sent");
-                } else if (status === 200) {
-                    alert("Friend request to " + username + " sent");
-                }
+                alert(result.data);
+                // if (status === 404) {
+                //     alert("No user with name " + username + " exists");
+                // } else if (status === 400) {
+                //     alert("Friend request to " + username + " already sent");
+                // } else if (status === 200) {
+                //     alert("Friend request to " + username + " sent");
+                // }
             }
             this.updateLists();
         });
@@ -180,54 +180,54 @@ export default class Friends extends React.Component {
                     </Modal.Footer>
                 </Modal>
                 <div className={styles.friends}>
-                    Friends:
-                    <br/>
-                    <div className={styles.friendList}>
-                        {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
-                            <li key={index}>
+                    <div className={styles.col}>
+                        Friends:
+                        <ul className={styles.friendList}>
+                            {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
+                                <li key={index}>
                                 <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
                                     {friend}
                                 </span>
-                            </li>
-                        )}
+                                </li>
+                            )}
+                        </ul>
                     </div>
-                </div>
-                <div className={styles.addFriends}>
-                    Add friend:
-                    <br/>
-                    <input
-                        className={styles.searchBar}
-                        type="text"
-                        placeholder="Search by username"
-                        value={this.state.searchText}
-                        onChange={this.handleSearchbarChange}
-                        onKeyDown={this.handleKeyDown}
-                    />
-                    <button
-                        className={styles.addFriendBtn}
-                        onClick={() => this.addFriend(this.state.searchText)}
-                    >
-                        Add friend
-                    </button>
-                </div>
-                <div className={styles.myRequests}>
-                    My Requests:
-                    <div className={styles.friendList}>
-                        {this.state.myFriendRequests.length === 0 ? "No requests yet" : this.state.myFriendRequests.map((friend, index) =>
-                            <li key={index}>
-                                {friend}
-                            </li>
-                        )}
+                    <div className={styles.col}>
+                        Add friend:
+                        <input
+                            className={styles.searchBar}
+                            type="text"
+                            placeholder="Search by username"
+                            value={this.state.searchText}
+                            onChange={this.handleSearchbarChange}
+                            onKeyDown={this.handleKeyDown}
+                        />
+                        <button
+                            className={styles.addFriendBtn}
+                            onClick={() => this.addFriend(this.state.searchText)}
+                        >
+                            Add friend
+                        </button>
                     </div>
-                </div>
-                <div className={styles.requestsToMe}>
-                    Requests to me:
-                    <div className={styles.friendList}>
-                        {this.state.friendRequestsToMe.length === 0 ? "No requests yet" : this.state.friendRequestsToMe.map((friend, index) =>
-                            <li key={index}>
-                                {friend}
-                            </li>
-                        )}
+                    <div className={styles.col}>
+                        My Requests:
+                        <ul className={styles.friendList}>
+                            {this.state.myFriendRequests.length === 0 ? "No requests yet" : this.state.myFriendRequests.map((friend, index) =>
+                                <li key={index}>
+                                    {friend}
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                    <div className={styles.col}>
+                        Requests to me:
+                        <ul className={styles.friendList}>
+                            {this.state.friendRequestsToMe.length === 0 ? "No requests yet" : this.state.friendRequestsToMe.map((friend, index) =>
+                                <li key={index}>
+                                    {friend}
+                                </li>
+                            )}
+                        </ul>
                     </div>
                 </div>
             </div>
