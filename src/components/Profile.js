@@ -131,7 +131,9 @@ export default class Profile extends React.Component {
                     </div>
                     {this.state.stats.citiesStats.map(country =>
                         <div className={styles.statsBox}>
-                            {country.name + ": " + country.citiesNumber}
+                            <div className={styles.longText}>
+                                {country.name + ": " + country.citiesNumber}
+                            </div>
                         </div>
                     )}
                 </div>
