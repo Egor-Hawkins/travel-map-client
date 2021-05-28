@@ -49,7 +49,7 @@ export default class Register extends React.Component {
             this.setState(this.defaultFormState);
             window.open("/login", "_self");
         }).catch(error => {
-            if (error.response.status === 400) {
+            if (error.response && error.response.status === 400) {
                 alert("Email not valid");
             } else {
                 console.log("Error occurred!");

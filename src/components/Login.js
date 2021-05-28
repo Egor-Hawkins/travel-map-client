@@ -54,7 +54,7 @@ export default class Login extends React.Component {
         }).catch(error => {
             console.log("Error occurred!");
             console.log(error);
-            if (error.response.status === 401) {
+            if (error.response && error.response.status === 401) {
                 alert("Username or password is incorrect!");
             }
         });

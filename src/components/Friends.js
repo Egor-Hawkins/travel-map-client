@@ -90,6 +90,11 @@ export default class Friends extends React.Component {
 
 
     addFriend = username => {
+        if (username === "") {
+            alert("Please enter friend username");
+            return;
+        }
+
         this.sendFriendRequest(username).then(result => {
             if (result) {
                 const status = result.status;
