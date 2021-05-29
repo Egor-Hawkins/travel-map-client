@@ -19,26 +19,27 @@ export async function health() {
     return health;
 }
 
+export async function ping() {
+    let ping = null;
+    await axios.get(SERVER_PING_URL, {
+        withCredentials: true
+    }).then(result => {
+        ping = result.data;
+    });
+    return ping;
+}
+
 export default class Ping extends React.Component {
-    ping = async () => {
-        let ping = null;
-        await axios.get(SERVER_PING_URL, {
-            withCredentials: true
-        }).then(result => {
-            ping = result.data;
+    getPing = () => {
+        ping().then(result => {
+            alert(result);
         }).catch(error => {
             if (error.response && error.response.status === 401) {
-                ping = "Not logged in";
+                alert("Not logged in");
             } else {
-                ping = error;
+                console.log("Error occurred!");
+                console.log(error);
             }
-        });
-        return ping;
-    };
-
-    getPing = () => {
-        this.ping().then(result => {
-            alert(result);
         });
     };
 

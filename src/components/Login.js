@@ -52,10 +52,13 @@ export default class Login extends React.Component {
             window.open("/map", "_self");
             this.setState(this.defaultFormState);
         }).catch(error => {
-            console.log("Error occurred!");
-            console.log(error);
-            if (error.response.status === 401) {
-                alert("Username or password is incorrect!");
+            if (error.response) {
+                if (error.response.status === 401) {
+                    alert("Username or password is incorrect!");
+                } else {
+                    console.log("Error occurred!");
+                    console.log(error);
+                }
             }
         });
     };

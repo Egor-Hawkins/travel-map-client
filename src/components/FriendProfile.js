@@ -61,6 +61,10 @@ export default class FriendProfile extends React.Component {
                 <br/>
                 Cities visited: {this.state.stats.totalCitiesNumber}
                 <br/>
+                Common countries visited: {this.state.stats.commonCountries}
+                <br/>
+                Common cities visited: {this.state.stats.totalCommonCities}
+                <br/>
                 <input
                     className={styles.friendStatsBtn}
                     type="submit"
@@ -75,9 +79,11 @@ export default class FriendProfile extends React.Component {
                     }}
                 >
                     Visited cities stats:
-                    {this.state.stats.citiesStats.map(country =>
-                        <div className={styles.friendStatsBox}>
-                            {country.name + ": " + country.citiesNumber}
+                    {this.state.stats.citiesStats.map((country, index) =>
+                        <div key={index} className={styles.friendStatsBox}>
+                            <div className={styles.longText}>
+                                {country.name + ": " + country.citiesNumber}
+                            </div>
                         </div>
                     )}
                 </div>
