@@ -34,6 +34,10 @@ export default class FriendProfile extends React.Component {
         });
     };
 
+    redirectToFriendMap = () => {
+        window.open("/friends/map?friendName=" + this.props.friendName, "_self")
+    };
+
     componentDidMount() {
         this.getStats(this.props.friendName).then(stats => {
             this.setState({
@@ -65,6 +69,12 @@ export default class FriendProfile extends React.Component {
                 <br/>
                 Common cities visited: {this.state.stats.totalCommonCities}
                 <br/>
+                <input
+                    className={styles.friendStatsBtn}
+                    type="submit"
+                    value={"Show map"}
+                    onClick={this.redirectToFriendMap}
+                />
                 <input
                     className={styles.friendStatsBtn}
                     type="submit"
