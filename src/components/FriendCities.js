@@ -49,7 +49,6 @@ export default class Cities extends React.Component {
         }, {
             withCredentials: true
         }).then(result => {
-            console.log(result.data)
             for (let city of result.data) {
                 visitedCities.push(city.name);
             }
@@ -68,14 +67,10 @@ export default class Cities extends React.Component {
             this.getCommonVisitedCities(this.iso, this.friendName).then(commonVisitedCities => {
                 this.commonVisitedCities = SortedSet(commonVisitedCities);
                 this.visitedCities = SortedSet(visitedCities);
-                console.log(this.commonVisitedCities)
-                console.log(this.visitedCities)
                 this.commonVisitedCities.forEach((city, index) => {
                         this.visitedCities.remove(city)
                     }
                 )
-                console.log(this.commonVisitedCities)
-                console.log(this.visitedCities)
                 this.setState({
                     waitForServer: false
                 });
