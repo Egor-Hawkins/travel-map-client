@@ -69,10 +69,6 @@ export default class CountryClick extends React.Component {
         return target ? target.properties._data.name : "";
     };
 
-    targetIso = target => {
-        return target ? target.properties._data.iso3166 : "";
-    };
-
     enterCountry = event => {
         const target = event.get("target");
         if (!this.targetVisited(target)) {
@@ -105,8 +101,9 @@ export default class CountryClick extends React.Component {
             friendName: this.state.friendName
         }, {
             withCredentials: true
+        }).catch(() => {
+            window.open("/friends", "_self")
         }).then(result => {
-            console.log(result.data)
             visitedCountries = result.data;
         });
         return visitedCountries;
