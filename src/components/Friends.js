@@ -279,9 +279,9 @@ export default class Friends extends React.Component {
                         >
                             {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
                                 <li key={index}>
-                                <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
-                                    {friend}
-                                </span>
+                                    <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
+                                        {friend}
+                                    </span>
                                 </li>
                             )}
                         </ul>
