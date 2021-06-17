@@ -53,6 +53,7 @@ export default class Profile extends React.Component {
     componentDidMount() {
         this.getStats().then(stats => {
             getFriendsList().then(friends => {
+                stats.citiesStats.sort((c1, c2) => c1.name.localeCompare(c2.name));
                 this.setState({
                     waitForServer: false,
                     loggedIn: true,
