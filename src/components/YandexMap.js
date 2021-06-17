@@ -16,16 +16,11 @@ export default class YandexMap extends React.Component {
         }).then(result => {
             result.features.forEach(feature => {
                 let geoObject = new this.ymaps.GeoObject(feature);
-                if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
-                    if (this.props.commonVisitedOptions != null) {
-                        if (this.props.commonVisitedISO.indexOf(feature.properties.iso3166) >= 0) {
-                            geoObject.options.set(this.props.commonVisitedOptions);
-                        } else {
-                            geoObject.options.set(this.props.visitedOptions);
-                        }
-                    } else {
-                        geoObject.options.set(this.props.visitedOptions);
-                    }
+
+                if (this.props.commonVisitedOptions && this.props.commonVisitedISO.indexOf(feature.properties.iso3166) >= 0) {
+                    geoObject.options.set(this.props.commonVisitedOptions);
+                } else if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
+                    geoObject.options.set(this.props.visitedOptions);
                 } else {
                     geoObject.options.set(this.props.defaultOptions);
                 }

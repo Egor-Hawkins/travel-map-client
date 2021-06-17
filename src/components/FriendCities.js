@@ -67,10 +67,8 @@ export default class Cities extends React.Component {
             this.getCommonVisitedCities(this.iso, this.friendName).then(commonVisitedCities => {
                 this.commonVisitedCities = SortedSet(commonVisitedCities);
                 this.visitedCities = SortedSet(visitedCities);
-                this.commonVisitedCities.forEach((city, index) => {
-                        this.visitedCities.remove(city);
-                    }
-                );
+                this.commonVisitedCities.forEach(city => this.visitedCities.remove(city));
+
                 this.setState({
                     waitForServer: false
                 });
@@ -93,7 +91,7 @@ export default class Cities extends React.Component {
                     </li>
                 )}
                 <br/>
-                {this.visitedCities.length ? "Uncommon cities" : "No uncommon cities"}
+                {this.visitedCities.length ? "Other visited cities" : "No other visited cities"}
                 {this.visitedCities.map((city, index) =>
                     <li key={index}>
                         {city}

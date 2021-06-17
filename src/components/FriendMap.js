@@ -174,9 +174,11 @@ export default class CountryClick extends React.Component {
                         <Modal.Title>{this.state.targetCountryName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {this.state.targetCountryVisited ? <Cities
-                            target={this.targetCountry}
-                            friendName={this.state.friendName}/> : null}
+                        {this.state.targetCountryVisited ?
+                            <Cities
+                                target={this.targetCountry}
+                                friendName={this.state.friendName}
+                            /> : null}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleModalClose}>
