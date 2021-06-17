@@ -60,8 +60,7 @@ export default class YandexMap extends React.Component {
                         onLoad={ymaps => this.initMap(ymaps)}
                         state={this.props.mapState}
                         style={this.props.mapStyle}
-                    >
-                    </Map>
+                    />
                 </YMaps>
             </div>
         );

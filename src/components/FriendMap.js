@@ -4,6 +4,7 @@ import Cities from "./FriendCities.js";
 import {Redirect} from "react-router";
 import {Button, Modal} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
+import styles from "../css/FriendMap.module.css";
 
 const axios = require("axios").default;
 const VISITED_COUNTRIES_PATH = "api/user/friends/countries";
@@ -109,7 +110,7 @@ export default class CountryClick extends React.Component {
         }, {
             withCredentials: true
         }).catch(() => {
-            window.open("/friends", "_self")
+            window.open("/friends", "_self");
         }).then(result => {
             visitedCountries = result.data;
         });
@@ -123,7 +124,7 @@ export default class CountryClick extends React.Component {
         }, {
             withCredentials: true
         }).catch(() => {
-            window.open("/friends", "_self")
+            window.open("/friends", "_self");
         }).then(result => {
             visitedCountries = result.data;
         });
@@ -147,7 +148,7 @@ export default class CountryClick extends React.Component {
                     waitForServer: false,
                     loggedIn: true
                 });
-            })
+            });
         }).catch(error => {
             if (error.response && error.response.status === 401) {
                 this.setState({
@@ -183,6 +184,10 @@ export default class CountryClick extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                <div className={styles.legend}>
+                    Common countries: <div className={styles.boxCommon}/>
+                    Other: <div className={styles.boxOther}/>
+                </div>
                 <YandexMap
                     enterCountry={this.enterCountry}
                     leaveCountry={this.leaveCountry}

@@ -19,7 +19,7 @@ export default class Cities extends React.Component {
         this.friendName = null;
         this.state = {
             waitForServer: true,
-            searchText: "",
+            searchText: ""
         };
     }
 
@@ -61,20 +61,20 @@ export default class Cities extends React.Component {
 
     componentDidMount() {
         this.iso = this.props.target.properties._data.iso3166;
-        this.friendName = this.props.friendName
+        this.friendName = this.props.friendName;
 
         this.getVisitedCities(this.iso, this.friendName).then(visitedCities => {
             this.getCommonVisitedCities(this.iso, this.friendName).then(commonVisitedCities => {
                 this.commonVisitedCities = SortedSet(commonVisitedCities);
                 this.visitedCities = SortedSet(visitedCities);
                 this.commonVisitedCities.forEach((city, index) => {
-                        this.visitedCities.remove(city)
+                        this.visitedCities.remove(city);
                     }
-                )
+                );
                 this.setState({
                     waitForServer: false
                 });
-            })
+            });
         }).catch(error => {
             console.log("Error occurred!");
             console.log(error);
@@ -89,18 +89,14 @@ export default class Cities extends React.Component {
                 {this.commonVisitedCities.length ? "Common cities" : "No common cities"}
                 {this.commonVisitedCities.map((city, index) =>
                     <li key={index}>
-                        <span style={{cursor: "pointer"}} onClick={() => this.selectCityName(city)}>
-                            {city}
-                        </span>
+                        {city}
                     </li>
                 )}
                 <br/>
                 {this.visitedCities.length ? "Uncommon cities" : "No uncommon cities"}
                 {this.visitedCities.map((city, index) =>
                     <li key={index}>
-                        <span style={{cursor: "pointer"}} onClick={() => this.selectCityName(city)}>
-                            {city}
-                        </span>
+                        {city}
                     </li>
                 )}
             </div>

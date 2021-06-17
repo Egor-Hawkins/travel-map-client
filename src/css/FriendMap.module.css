@@ -1,0 +1,22 @@
+.legend {
+  position: absolute;
+  right: 0;
+  width: 180px;
+  height: 50px;
+  background-color: white;
+  z-index: 1;
+}
+
+.boxCommon {
+  height: 15px;
+  width: 15px;
+  background-color: #b65def;
+  display: inline-block;
+}
+
+.boxOther {
+  height: 15px;
+  width: 15px;
+  background-color: #fb6c3f;
+  display: inline-block;
+}
