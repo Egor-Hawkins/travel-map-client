@@ -8,6 +8,14 @@ const mapState = {
     type: "yandex#map"
 };
 
+const mapOptions = {
+    minZoom: 2,
+    restrictMapArea: [
+        [-85, -169],
+        [85, 190]
+    ]
+};
+
 const mapStyle = {
     position: "absolute",
     width: "100%",
@@ -67,6 +75,7 @@ export default class YandexMap extends React.Component {
                         instanceRef={this.map}
                         onLoad={ymaps => this.initMap(ymaps)}
                         state={mapState}
+                        options={mapOptions}
                         style={mapStyle}
                     />
                 </YMaps>
