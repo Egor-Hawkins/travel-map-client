@@ -10,19 +10,6 @@ const axios = require("axios").default;
 const VISITED_COUNTRIES_PATH = "api/user/visited_countries";
 const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + VISITED_COUNTRIES_PATH;
 
-const mapState = {
-    center: [0, 0],
-    zoom: 3,
-    controls: ["zoomControl"],
-    type: "yandex#map"
-};
-
-const mapStyle = {
-    position: "absolute",
-    width: "100%",
-    height: "100%"
-};
-
 const DEFAULT_OPTIONS = {
     type: "DEFAULT",
     fillColor: "#ffffff",
@@ -202,8 +189,6 @@ export default class CountryClick extends React.Component {
                     visitedISO={this.visitedISO}
                     defaultOptions={DEFAULT_OPTIONS}
                     visitedOptions={VISITED_OPTIONS}
-                    mapState={mapState}
-                    mapStyle={mapStyle}
                 />
             </div>
         );

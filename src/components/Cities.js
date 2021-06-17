@@ -3,8 +3,8 @@ import styles from "../css/Cities.module.scss";
 
 const axios = require("axios").default;
 const CITIES_BY_COUNTRY_PATH = "api/cities";
-const SERVER_CITIES_BY_COUNTRY = process.env.REACT_APP_SERVER_URL + CITIES_BY_COUNTRY_PATH;
 const VISITED_CITIES_PATH = "api/user/visited_cities";
+const SERVER_CITIES_BY_COUNTRY = process.env.REACT_APP_SERVER_URL + CITIES_BY_COUNTRY_PATH;
 const SERVER_VISITED_CITIES_URL = process.env.REACT_APP_SERVER_URL + VISITED_CITIES_PATH;
 const SortedSet = require("collections/sorted-set");
 

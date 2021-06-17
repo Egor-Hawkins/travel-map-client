@@ -8,22 +8,9 @@ import styles from "../css/FriendMap.module.css";
 
 const axios = require("axios").default;
 const VISITED_COUNTRIES_PATH = "api/user/friends/countries";
-const COMMON_VISITED_COUNTRIES_PATH = "api/user/friends/countries/common";
+const COMMON_VISITED_COUNTRIES_PATH = VISITED_COUNTRIES_PATH + "/common";
 const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + VISITED_COUNTRIES_PATH;
 const SERVER_COMMON_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + COMMON_VISITED_COUNTRIES_PATH;
-
-const mapState = {
-    center: [0, 0],
-    zoom: 3,
-    controls: ["zoomControl"],
-    type: "yandex#map"
-};
-
-const mapStyle = {
-    position: "absolute",
-    width: "100%",
-    height: "100%"
-};
 
 const DEFAULT_OPTIONS = {
     type: "DEFAULT",
@@ -199,8 +186,6 @@ export default class CountryClick extends React.Component {
                     defaultOptions={DEFAULT_OPTIONS}
                     visitedOptions={VISITED_OPTIONS}
                     commonVisitedOptions={COMMON_VISITED_OPTIONS}
-                    mapState={mapState}
-                    mapStyle={mapStyle}
                 />
             </div>
         );

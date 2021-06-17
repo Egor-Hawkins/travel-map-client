@@ -1,6 +1,19 @@
 import React from "react";
 import {Map, YMaps} from "react-yandex-maps";
 
+const mapState = {
+    center: [0, 0],
+    zoom: 3,
+    controls: ["zoomControl"],
+    type: "yandex#map"
+};
+
+const mapStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+};
+
 export default class YandexMap extends React.Component {
     constructor(props) {
         super(props);
@@ -53,8 +66,8 @@ export default class YandexMap extends React.Component {
                     <Map
                         instanceRef={this.map}
                         onLoad={ymaps => this.initMap(ymaps)}
-                        state={this.props.mapState}
-                        style={this.props.mapStyle}
+                        state={mapState}
+                        style={mapStyle}
                     />
                 </YMaps>
             </div>
