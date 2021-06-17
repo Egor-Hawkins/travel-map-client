@@ -3,8 +3,27 @@
 @import "~font-awesome/scss/font-awesome";
 
 .col {
-  width: 22vw;
   float: left;
+}
+
+.col1 {
+  @extend .col;
+  width: 23vw;
+}
+
+.col2 {
+  @extend .col;
+  width: 22vw;
+}
+
+.col3 {
+  @extend .col;
+  width: 23vw;
+}
+
+.col4 {
+  @extend .col;
+  width: auto;
 }
 
 .friends {
@@ -39,11 +58,11 @@
 .declineRequestBtn {
   color: red;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 1.3vw;
 }
 
 .acceptRequestBtn {
   color: limegreen;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 1.3vw;
 }

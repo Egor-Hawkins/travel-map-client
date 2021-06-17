@@ -48,9 +48,34 @@ export default class Sidebar extends React.Component {
                     Login
                 </NavLink>
                 <NavLink className="menu-item" to="/ping">Ping</NavLink>
-                <NavLink className="menu-item" to="/profile">Profile</NavLink>
-                <NavLink className="menu-item" to="/friends">Friends</NavLink>
-                <NavLink className="menu-item" to="/map">Map</NavLink>
+
+                <NavLink
+                    style={{
+                        display: this.state.loggedIn ? "block" : "none"
+                    }}
+                    className="menu-item"
+                    to="/profile"
+                >
+                    Profile
+                </NavLink>
+                <NavLink
+                    style={{
+                        display: this.state.loggedIn ? "block" : "none"
+                    }}
+                    className="menu-item"
+                    to="/friends"
+                >
+                    Friends
+                </NavLink>
+                <NavLink
+                    style={{
+                        display: this.state.loggedIn ? "block" : "none"
+                    }}
+                    className="menu-item"
+                    to="/map"
+                >
+                    Map
+                </NavLink>
                 <NavLink
                     style={{
                         display: this.state.loggedIn ? "block" : "none"
