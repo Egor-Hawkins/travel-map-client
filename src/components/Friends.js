@@ -269,7 +269,7 @@ export default class Friends extends React.Component {
                     </Modal.Footer>
                 </Modal>
                 <div className={styles.friends}>
-                    <div className={styles.col}>
+                    <div className={styles.col1}>
                         Friends:
                         <ul
                             className={styles.friendList}
@@ -286,7 +286,7 @@ export default class Friends extends React.Component {
                             )}
                         </ul>
                     </div>
-                    <div className={styles.col}>
+                    <div className={styles.col2}>
                         Add friend:
                         <input
                             className={styles.searchBar}
@@ -303,7 +303,7 @@ export default class Friends extends React.Component {
                             Add friend
                         </button>
                     </div>
-                    <div className={styles.col}>
+                    <div className={styles.col3}>
                         My Requests:
                         <ul
                             className={styles.friendList}
@@ -324,7 +324,7 @@ export default class Friends extends React.Component {
                             )}
                         </ul>
                     </div>
-                    <div className={styles.col}>
+                    <div className={styles.col4}>
                         Requests to me:
                         <ul
                             className={styles.friendList}

@@ -69,6 +69,7 @@ export default class Register extends React.Component {
                 <div className={formStyle.form}>
                     <input
                         className={formStyle.input}
+                        maxLength="100"
                         type="text"
                         placeholder="Enter your email"
                         value={this.state.email}
@@ -77,6 +78,7 @@ export default class Register extends React.Component {
                     />
                     <input
                         className={formStyle.input}
+                        maxLength="20"
                         type="text"
                         placeholder="Enter your username"
                         value={this.state.username}
@@ -85,6 +87,7 @@ export default class Register extends React.Component {
                     />
                     <input
                         className={formStyle.input}
+                        maxLength="100"
                         type="password"
                         placeholder="Enter your password"
                         value={this.state.password}
