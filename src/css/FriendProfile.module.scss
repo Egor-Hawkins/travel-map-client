@@ -9,12 +9,19 @@ $background-active-color: hsl(0, 59%, 45%);
   font-size: 25px;
 }
 
-.friendStatsBtn {
-  @extend .statsBtn;
+.showMapBtn {
+  @extend .btn;
 
   font-size: inherit;
   width: 250px;
   height: 50px;
+  margin-top: -40px;
+}
+
+.friendStatsBtn {
+  @extend .showMapBtn;
+
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 

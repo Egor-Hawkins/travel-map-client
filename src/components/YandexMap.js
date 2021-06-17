@@ -1,6 +1,27 @@
 import React from "react";
 import {Map, YMaps} from "react-yandex-maps";
 
+const mapState = {
+    center: [0, 0],
+    zoom: 3,
+    controls: ["zoomControl"],
+    type: "yandex#map"
+};
+
+const mapOptions = {
+    minZoom: 2,
+    restrictMapArea: [
+        [-85, -169],
+        [85, 190]
+    ]
+};
+
+const mapStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+};
+
 export default class YandexMap extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +37,10 @@ export default class YandexMap extends React.Component {
         }).then(result => {
             result.features.forEach(feature => {
                 let geoObject = new this.ymaps.GeoObject(feature);
-                if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
+
+                if (this.props.commonVisitedOptions && this.props.commonVisitedISO.indexOf(feature.properties.iso3166) >= 0) {
+                    geoObject.options.set(this.props.commonVisitedOptions);
+                } else if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
                     geoObject.options.set(this.props.visitedOptions);
                 } else {
                     geoObject.options.set(this.props.defaultOptions);
@@ -50,10 +74,10 @@ export default class YandexMap extends React.Component {
                     <Map
                         instanceRef={this.map}
                         onLoad={ymaps => this.initMap(ymaps)}
-                        state={this.props.mapState}
-                        style={this.props.mapStyle}
-                    >
-                    </Map>
+                        state={mapState}
+                        options={mapOptions}
+                        style={mapStyle}
+                    />
                 </YMaps>
             </div>
         );

@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/Background.scss";
 import formStyle from "../css/Form.module.scss";
-import style from "../css/Register.module.scss";
+import styles from "../css/Register.module.scss";
 import Sidebar from "./Sidebar.js";
 import {NavLink} from "react-router-dom";
 
@@ -97,10 +97,10 @@ export default class Register extends React.Component {
                         value="Register"
                         onClick={this.register}
                     />
-                    <p className={style.txt}>
+                    <p className={styles.txt}>
                         Already registered?
                     </p>
-                    <NavLink className={style.toLogin} to="/login">
+                    <NavLink className={styles.toLogin} to="/login">
                         Login
                     </NavLink>
                 </div>
