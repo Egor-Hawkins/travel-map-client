@@ -3,6 +3,8 @@ import "../css/Background.scss";
 import formStyle from "../css/Form.module.scss";
 import "font-awesome/css/font-awesome.min.css";
 import Sidebar from "./Sidebar.js";
+import styles from "../css/Register.module.scss";
+import {NavLink} from "react-router-dom";
 
 const axios = require("axios").default;
 const querystring = require("querystring");
@@ -97,6 +99,13 @@ export default class Login extends React.Component {
                         value="Login"
                         onClick={this.login}
                     />
+                    <br/>
+                    <p className={styles.txt}>
+                        Not registered yet?
+                    </p>
+                    <NavLink className={styles.toLogin} to="/registration">
+                        Register
+                    </NavLink>
                 </div>
             </div>
         );
