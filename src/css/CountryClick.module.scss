@@ -3,8 +3,9 @@
 .visitBtn {
   @extend .btn;
 
-  width: 10vmax;
-  margin-left: 2.7vw;
+  font-size: 200%;
+  width: 40%;
+  margin-left: 5%;
   margin-top: -2vh;
   float: left;
   margin-bottom: 2vh;
@@ -13,7 +14,8 @@
 .visitCenteredBtn {
   @extend .btn;
 
-  font-size: 1.8vmax;
+  width: 40%;
+  font-size: 200%;
   top: 0;
   left: 50%;
   -ms-transform: translate(-50%);
@@ -23,7 +25,7 @@
 
 .desireBtn {
   @extend .visitBtn;
-  margin-left: 1.5vw;
+  margin-left: 5%;
 }
 
 .cities {
