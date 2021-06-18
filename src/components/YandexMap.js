@@ -42,6 +42,8 @@ export default class YandexMap extends React.Component {
                     geoObject.options.set(this.props.commonVisitedOptions);
                 } else if (this.props.visitedISO.indexOf(feature.properties.iso3166) >= 0) {
                     geoObject.options.set(this.props.visitedOptions);
+                } else if (this.props.desiredISO.indexOf(feature.properties.iso3166) >= 0) {
+                    geoObject.options.set(this.props.desiredOptions);
                 } else {
                     geoObject.options.set(this.props.defaultOptions);
                 }

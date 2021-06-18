@@ -20,3 +20,10 @@
   background-color: #fb6c3f;
   display: inline-block;
 }
+
+.boxDesired {
+  height: 15px;
+  width: 15px;
+  background-color: #90ee90;
+  display: inline-block;
+}
