@@ -237,9 +237,9 @@ export default class CountryClick extends React.Component {
                     </Modal.Footer>
                 </Modal>
                 <div className={styles.bigLegend}>
-                    Common visited: <div className={styles.boxCommonVisited}/>
-                    Other visited: <div className={styles.boxVisited}/>
-                    Common desired: <div className={styles.boxCommonDesired}/>
+                    Common visited: <div className={styles.boxCommonVisited}/><br/>
+                    Other visited: <div className={styles.boxVisited}/><br/>
+                    Common desired: <div className={styles.boxCommonDesired}/><br/>
                     Other desired: <div className={styles.boxDesired}/>
                 </div>
                 <YandexMap
