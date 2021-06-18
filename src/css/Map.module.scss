@@ -7,23 +7,33 @@
   z-index: 1;
 }
 
-.boxCommon {
+.bigLegend {
+  @extend .legend;
+  height: 100px;
+}
+
+.box {
   height: 15px;
   width: 15px;
-  background-color: #b65def;
   display: inline-block;
 }
 
-.boxOther {
-  height: 15px;
-  width: 15px;
+.boxCommonVisited {
+  @extend .box;
+  background-color: #b65def;
+}
+
+.boxVisited {
+  @extend .box;
   background-color: #fb6c3f;
-  display: inline-block;
+}
+
+.boxCommonDesired {
+  @extend .box;
+  background-color: #1a50ff;
 }
 
 .boxDesired {
-  height: 15px;
-  width: 15px;
+  @extend .box;
   background-color: #90ee90;
-  display: inline-block;
 }

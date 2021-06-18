@@ -5,7 +5,7 @@ import {Redirect} from "react-router";
 import {Button, Modal} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
 import styles from "../css/CountryClick.module.scss";
-import mapStyle from "../css/Map.module.css";
+import mapStyle from "../css/Map.module.scss";
 
 const axios = require("axios").default;
 const API_PATH = "api/user";
@@ -64,7 +64,8 @@ export default class CountryClick extends React.Component {
     };
 
     targetDesired = target => {
-        return target ? target.options.get("type") === "DESIRED" : false;
+        const type = target.options.get("type");
+        return target ? type === "DESIRED" || type === "COMMON_DESIRED" : false;
     };
 
     targetName = target => {
@@ -273,7 +274,7 @@ export default class CountryClick extends React.Component {
                     </Modal.Footer>
                 </Modal>
                 <div className={mapStyle.legend}>
-                    Visited countries: <div className={mapStyle.boxOther}/>
+                    Visited countries: <div className={mapStyle.boxVisited}/>
                     Desired countries: <div className={mapStyle.boxDesired}/>
                 </div>
                 <YandexMap
