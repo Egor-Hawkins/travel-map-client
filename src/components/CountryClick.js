@@ -274,7 +274,7 @@ export default class CountryClick extends React.Component {
                     </Modal.Footer>
                 </Modal>
                 <div className={mapStyle.legend}>
-                    Visited countries: <div className={mapStyle.boxVisited}/>
+                    Visited countries: <div className={mapStyle.boxVisited}/><br/>
                     Desired countries: <div className={mapStyle.boxDesired}/>
                 </div>
                 <YandexMap
