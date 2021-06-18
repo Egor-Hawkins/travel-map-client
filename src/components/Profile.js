@@ -118,23 +118,6 @@ export default class Profile extends React.Component {
                 <div className={styles.statsHeader}>
                     User stats:
                 </div>
-                <div className={styles.friends}>
-                    Friends:
-                    <div className={styles.friendList}>
-                        {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
-                            <li key={index}>
-                                <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
-                                    {friend}
-                                </span>
-                            </li>
-                        )}
-                    </div>
-                </div>
-                <NavLink className={styles.link} to="/friends">
-                    <button className={styles.manageFriendList}>
-                        Manage friend list
-                    </button>
-                </NavLink>
                 <div className={styles.mainStats}>
                     <div className={styles.box}>
                         Countries visited: {this.state.stats.countriesNumber}
@@ -169,6 +152,23 @@ export default class Profile extends React.Component {
                         </div>
                     )}
                 </div>
+                <div className={styles.friends}>
+                    Friends:
+                    <div className={styles.friendList}>
+                        {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
+                            <li key={index}>
+                                <span style={{cursor: "pointer"}} onClick={() => this.openModal(friend)}>
+                                    {friend}
+                                </span>
+                            </li>
+                        )}
+                    </div>
+                </div>
+                <NavLink className={styles.link} to="/friends">
+                    <button className={styles.manageFriendList}>
+                        Manage friend list
+                    </button>
+                </NavLink>
             </div>
         );
     }
