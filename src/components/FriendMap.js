@@ -4,13 +4,17 @@ import Cities from "./FriendCities.js";
 import {Redirect} from "react-router";
 import {Button, Modal} from "react-bootstrap";
 import Sidebar from "./Sidebar.js";
-import styles from "../css/FriendMap.module.css";
+import styles from "../css/Map.module.scss";
 
 const axios = require("axios").default;
 const VISITED_COUNTRIES_PATH = "api/user/friends/countries";
+const DESIRED_COUNTRIES_PATH = VISITED_COUNTRIES_PATH + "/desired";
 const COMMON_VISITED_COUNTRIES_PATH = VISITED_COUNTRIES_PATH + "/common";
+const COMMON_DESIRED_COUNTRIES_PATH = COMMON_VISITED_COUNTRIES_PATH + "/desired";
 const SERVER_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + VISITED_COUNTRIES_PATH;
+const SERVER_DESIRED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + DESIRED_COUNTRIES_PATH;
 const SERVER_COMMON_VISITED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + COMMON_VISITED_COUNTRIES_PATH;
+const SERVER_COMMON_DESIRED_COUNTRIES_URL = process.env.REACT_APP_SERVER_URL + COMMON_DESIRED_COUNTRIES_PATH;
 
 const DEFAULT_OPTIONS = {
     type: "DEFAULT",
@@ -27,10 +31,24 @@ const VISITED_OPTIONS = {
 };
 
 const COMMON_VISITED_OPTIONS = {
-    type: "COMMON",
+    type: "COMMON_VISITED",
     fillColor: "#b65def",
     fillOpacity: 0.8,
     visited: true
+};
+
+const DESIRED_OPTIONS = {
+    type: "DESIRED",
+    fillColor: "#90ee90",
+    fillOpacity: 0.8,
+    visited: false
+};
+
+const COMMON_DESIRED_OPTIONS = {
+    type: "COMMON_DESIRED",
+    fillColor: "#1a50ff",
+    fillOpacity: 0.8,
+    visited: false
 };
 
 const HIGHLIGHT_OPTIONS = {
@@ -46,6 +64,8 @@ export default class CountryClick extends React.Component {
 
         this.visitedISO = [];
         this.commonVisitedISO = [];
+        this.desiredISO = [];
+        this.commonDesiredISO = [];
         this.targetCountry = null;
         this.state = {
             friendName: new URL(window.location.href).searchParams.get("friendName"),
@@ -61,20 +81,25 @@ export default class CountryClick extends React.Component {
         return target ? target.options.get("visited") : false;
     };
 
+    targetDesired = target => {
+        const type = target.options.get("type");
+        return target ? type === "DESIRED" || type === "COMMON_DESIRED" : false;
+    };
+
     targetName = target => {
         return target ? target.properties._data.name : "";
     };
 
     enterCountry = event => {
         const target = event.get("target");
-        if (!this.targetVisited(target)) {
+        if (!this.targetVisited(target) && !this.targetDesired(target)) {
             target.options.set(HIGHLIGHT_OPTIONS);
         }
     };
 
     leaveCountry = event => {
         const target = event.get("target");
-        if (!this.targetVisited(target)) {
+        if (!this.targetVisited(target) && !this.targetDesired(target)) {
             target.options.set(DEFAULT_OPTIONS);
         }
     };
@@ -105,7 +130,7 @@ export default class CountryClick extends React.Component {
     };
 
     async getCommonVisitedCountries() {
-        let visitedCountries = null;
+        let commonVisitedCountries = null;
         await axios.post(SERVER_COMMON_VISITED_COUNTRIES_URL, {
             friendName: this.state.friendName
         }, {
@@ -113,10 +138,38 @@ export default class CountryClick extends React.Component {
         }).catch(() => {
             window.open("/friends", "_self");
         }).then(result => {
-            visitedCountries = result.data;
+            commonVisitedCountries = result.data;
         });
-        return visitedCountries;
+        return commonVisitedCountries;
     };
+
+    async getDesiredCountries() {
+        let desiredCountries = null;
+        await axios.post(SERVER_DESIRED_COUNTRIES_URL, {
+            friendName: this.state.friendName
+        }, {
+            withCredentials: true
+        }).catch(() => {
+            window.open("/friends", "_self");
+        }).then(result => {
+            desiredCountries = result.data;
+        });
+        return desiredCountries;
+    }
+
+    async getCommonDesiredCountries() {
+        let commonDesiredCountries = null;
+        await axios.post(SERVER_COMMON_DESIRED_COUNTRIES_URL, {
+            friendName: this.state.friendName
+        }, {
+            withCredentials: true
+        }).catch(() => {
+            window.open("/friends", "_self");
+        }).then(result => {
+            commonDesiredCountries = result.data;
+        });
+        return commonDesiredCountries;
+    }
 
     handleModalClose = () => this.setState({
         showModal: false
@@ -125,15 +178,25 @@ export default class CountryClick extends React.Component {
     componentDidMount() {
         this.getVisitedCountries().then(visitedCountries => {
             this.getCommonVisitedCountries().then(commonVisitedCountries => {
-                for (const country of visitedCountries) {
-                    this.visitedISO.push(country.iso);
-                }
-                for (const country of commonVisitedCountries) {
-                    this.commonVisitedISO.push(country.iso);
-                }
-                this.setState({
-                    waitForServer: false,
-                    loggedIn: true
+                this.getDesiredCountries().then(desiredCountries => {
+                    this.getCommonDesiredCountries().then(commonDesiredCountries => {
+                        for (const country of visitedCountries) {
+                            this.visitedISO.push(country.iso);
+                        }
+                        for (const country of commonVisitedCountries) {
+                            this.commonVisitedISO.push(country.iso);
+                        }
+                        for (const country of desiredCountries) {
+                            this.desiredISO.push(country.iso);
+                        }
+                        for (const country of commonDesiredCountries) {
+                            this.commonDesiredISO.push(country.iso);
+                        }
+                        this.setState({
+                            waitForServer: false,
+                            loggedIn: true
+                        });
+                    });
                 });
             });
         }).catch(error => {
@@ -173,9 +236,11 @@ export default class CountryClick extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className={styles.legend}>
-                    Common countries: <div className={styles.boxCommon}/>
-                    Other: <div className={styles.boxOther}/>
+                <div className={styles.bigLegend}>
+                    Common visited: <div className={styles.boxCommonVisited}/>
+                    Other visited: <div className={styles.boxVisited}/>
+                    Common desired: <div className={styles.boxCommonDesired}/>
+                    Other desired: <div className={styles.boxDesired}/>
                 </div>
                 <YandexMap
                     enterCountry={this.enterCountry}
@@ -183,9 +248,13 @@ export default class CountryClick extends React.Component {
                     clickOnCountry={this.clickOnCountry}
                     visitedISO={this.visitedISO}
                     commonVisitedISO={this.commonVisitedISO}
+                    desiredISO={this.desiredISO}
+                    commonDesiredISO={this.commonDesiredISO}
                     defaultOptions={DEFAULT_OPTIONS}
                     visitedOptions={VISITED_OPTIONS}
                     commonVisitedOptions={COMMON_VISITED_OPTIONS}
+                    desiredOptions={DESIRED_OPTIONS}
+                    commonDesiredOptions={COMMON_DESIRED_OPTIONS}
                 />
             </div>
         );
