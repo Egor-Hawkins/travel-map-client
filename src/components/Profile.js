@@ -120,7 +120,6 @@ export default class Profile extends React.Component {
                 </div>
                 <div className={styles.friends}>
                     Friends:
-                    <br/>
                     <div className={styles.friendList}>
                         {this.state.friends.length === 0 ? "No friends yet" : this.state.friends.map((friend, index) =>
                             <li key={index}>
